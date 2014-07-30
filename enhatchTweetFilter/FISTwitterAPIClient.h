@@ -7,8 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <STTwitter.h>
+#import <LVTwitterOAuthClient.h>
+#import <Accounts/Accounts.h>
 
 @interface FISTwitterAPIClient : NSObject
-+ (void)getFriendsWithBlock:(void (^)(NSArray *friendsArray, NSError *error))tweetCalback;
-+ (void)getFeedWithBlockSince:(NSString *)since withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetCalback;
+
+
++ (void)createTwitterAccountWithTwitterAccount:(STTwitterAPI*)twitterAPI CompletionBlock:(void (^)(STTwitterAPI *aPITwitterAccount,NSError *error))accountBlock;
++ (void)getFeedWithBlockForAccount:(STTwitterAPI*)twitterAccount Since:(NSString *)since withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetCalback;
++ (void)getFriendsForAccount:(STTwitterAPI*)twitterAccount WithBlock:(void (^)(NSArray *friendsArray, NSError *error))friendsCalback;
+
 @end

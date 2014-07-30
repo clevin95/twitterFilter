@@ -39,16 +39,24 @@
 
     self.store = [FISDataStore sharedDataStore];
     
+    [self.store createTwitterAccount:^{
+        
+    }];
     
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"negativeVectorField"];
     self.store.negativeVectorField =  [NSKeyedUnarchiver unarchiveObjectWithData:data];
     self.store.dislikedVectors = [self.store.negativeVectorField.vectors mutableCopy];
     self.store.tweetsToShow =[[NSMutableArray alloc]init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadTweets) name:@"finishedCreatingUser" object:nil];
+    
+    
+    
+}
+
+- (void)loadTweets {
     [self.store updateTweetsToShow:^{
         [self.tableView reloadData];
     }];
-     
-    
 }
 
 - (void)didReceiveMemoryWarning

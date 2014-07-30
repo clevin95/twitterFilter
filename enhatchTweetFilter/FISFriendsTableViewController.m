@@ -33,10 +33,8 @@
     [super viewDidLoad];
     self.store = [FISDataStore sharedDataStore];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFriends) name:@"finishedCreatingUser" object:nil];
     
-    [self.store updateFriendsToShow:^{
-        [self.tableView reloadData];
-    }];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -45,13 +43,18 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void) loadFriends{
+    [self.store updateFriendsToShow:^{
+        [self.tableView reloadData];
+    }];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FISPreferenceVectorField.h"
+@class STTwitterAPI;
 
 @interface FISDataStore : NSObject
 
@@ -19,10 +20,15 @@
 @property (strong, nonatomic) NSMutableArray *filteredArray;
 @property (strong, nonatomic) NSArray *friendsArray;
 
+@property (strong, nonatomic) STTwitterAPI *twitterAccount;
+@property (nonatomic) BOOL credentialAuthorized;
+@property (nonatomic, copy) void (^accountCompletion)(void);
+
 + (instancetype)sharedDataStore;
 - (void) updateTweetsToShow:(void (^)(void))callback;
 - (void) addDislikedTweet:(NSString *)tweet;
 - (void) updateFriendsToShow:(void (^)(void))callback;
+- (void) createTwitterAccount:(void (^)(void))callback;
 
 @end
 

@@ -133,8 +133,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="contactsContainer" destination="5e1-ct-r3D" id="h7d-em-dMI"/>
-                        <outlet property="globalContainer" destination="69j-C3-3ar" id="Tee-XZ-wdR"/>
+                        <outlet property="contactsContainer" destination="69j-C3-3ar" id="yt0-nc-kDQ"/>
+                        <outlet property="globalContainer" destination="5e1-ct-r3D" id="uft-ds-dad"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mpN-ok-99u" userLabel="First Responder" sceneMemberID="firstResponder"/>

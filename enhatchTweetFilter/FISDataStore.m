@@ -57,9 +57,7 @@
     __weak typeof(self) weakSelf = self;
 
     
-    
-    [FISTwitterAPIClient getFeedWithBlockSince:self.lastID withBlock:^(NSArray *tweetArray, NSError *error) {
-        
+    [FISTwitterAPIClient getFeedWithBlockForAccount:self.twitterAccount Since:self.lastID withBlock:^(NSArray *tweetArray, NSError *error) {
         if ([tweetArray count] > 0){
             self.lastID = tweetArray[0][@"id_str"];
         }
@@ -88,7 +86,7 @@
 
 - (void) updateFriendsToShow:(void (^)(void))callback {
     __weak typeof(self) weakSelf = self;
-    [FISTwitterAPIClient getFriendsWithBlock:^(NSArray *friendsArray, NSError *error) {
+    [FISTwitterAPIClient getFriendsForAccount:self.twitterAccount WithBlock:^(NSArray *friendsArray, NSError *error) {
         NSMutableArray *friendsTempArray = [[NSMutableArray alloc]init];
         for (NSDictionary *friend in friendsArray){
             FISTwitterPerson *newFriend = [[FISTwitterPerson alloc]init];
@@ -101,6 +99,25 @@
         weakSelf.friendsArray = friendsTempArray;
         callback();
     }];
+}
+
+- (void) createTwitterAccount:(void (^)(void))callback
+{
+    [FISTwitterAPIClient createTwitterAccountWithTwitterAccount:self.twitterAccount CompletionBlock:^(STTwitterAPI *aPITwitterAccount, NSError *error)
+     {
+         if (!error)
+         {
+             self.credentialAuthorized = YES;
+             
+             self.twitterAccount = aPITwitterAccount;
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedCreatingUser" object:nil];
+             callback();
+         }
+         else
+         {
+             NSLog(@"Error - %@",error.localizedDescription);
+         }
+     }];
 }
 
 

@@ -30,7 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.globalContainer.hidden = YES;
+    self.contactsContainer.hidden = YES;
+    self.globalContainer.hidden = NO;
     // Do any additional setup after loading the view.
 }
 

@@ -11,6 +11,14 @@
 
 @implementation FISTwitterPerson
 
+
+-(NSMutableArray *)negativeVectors{
+    if (!_negativeVectors){
+        _negativeVectors = [[NSMutableArray alloc]init];
+    }
+    return _negativeVectors;
+}
+
 -(void)getImageForPersonWithBlock:(void (^)(NSError *))finishedBlock {
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.profileImageURL]];
     AFHTTPRequestOperation *imageDownload = [[AFHTTPRequestOperation alloc] initWithRequest:request];
