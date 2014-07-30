@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1F70CEBA06AB4F15BC8D30A8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */; };
+		6F0412F11989673E002CC2E7 /* FISTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0412F01989673E002CC2E7 /* FISTweet.m */; };
+		6F0412F419897C2C002CC2E7 /* FISFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0412F319897C2C002CC2E7 /* FISFriendTableViewCell.m */; };
+		6F0412F719898D3C002CC2E7 /* FISFriendFeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F0412F619898D3C002CC2E7 /* FISFriendFeedTableViewController.m */; };
 		6F70B1471989376200AE67FF /* FISSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B1461989376200AE67FF /* FISSegmentedViewController.m */; };
 		6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */; };
-		6F70B14D19893E3500AE67FF /* FISTwitterFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14C19893E3500AE67FF /* FISTwitterFriend.m */; };
+		6F70B14D19893E3500AE67FF /* FISTwitterPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14C19893E3500AE67FF /* FISTwitterPerson.m */; };
+		6F70B1501989470700AE67FF /* FISSlidableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14F1989470700AE67FF /* FISSlidableTableViewCell.m */; };
 		6FA5EA9F1987DC4300AECF7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EA9E1987DC4300AECF7C /* Foundation.framework */; };
 		6FA5EAA11987DC4300AECF7C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EAA01987DC4300AECF7C /* CoreGraphics.framework */; };
 		6FA5EAA31987DC4300AECF7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EAA21987DC4300AECF7C /* UIKit.framework */; };
@@ -45,12 +49,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F0412EF1989673E002CC2E7 /* FISTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISTweet.h; sourceTree = "<group>"; };
+		6F0412F01989673E002CC2E7 /* FISTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISTweet.m; sourceTree = "<group>"; };
+		6F0412F219897C2C002CC2E7 /* FISFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISFriendTableViewCell.h; sourceTree = "<group>"; };
+		6F0412F319897C2C002CC2E7 /* FISFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISFriendTableViewCell.m; sourceTree = "<group>"; };
+		6F0412F519898D3C002CC2E7 /* FISFriendFeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISFriendFeedTableViewController.h; sourceTree = "<group>"; };
+		6F0412F619898D3C002CC2E7 /* FISFriendFeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISFriendFeedTableViewController.m; sourceTree = "<group>"; };
 		6F70B1451989376200AE67FF /* FISSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISSegmentedViewController.h; sourceTree = "<group>"; };
 		6F70B1461989376200AE67FF /* FISSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISSegmentedViewController.m; sourceTree = "<group>"; };
 		6F70B14819893A6600AE67FF /* FISFriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISFriendsTableViewController.h; sourceTree = "<group>"; };
 		6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISFriendsTableViewController.m; sourceTree = "<group>"; };
-		6F70B14B19893E3500AE67FF /* FISTwitterFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISTwitterFriend.h; sourceTree = "<group>"; };
-		6F70B14C19893E3500AE67FF /* FISTwitterFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISTwitterFriend.m; sourceTree = "<group>"; };
+		6F70B14B19893E3500AE67FF /* FISTwitterPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISTwitterPerson.h; sourceTree = "<group>"; };
+		6F70B14C19893E3500AE67FF /* FISTwitterPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISTwitterPerson.m; sourceTree = "<group>"; };
+		6F70B14E1989470700AE67FF /* FISSlidableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISSlidableTableViewCell.h; sourceTree = "<group>"; };
+		6F70B14F1989470700AE67FF /* FISSlidableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISSlidableTableViewCell.m; sourceTree = "<group>"; };
 		6FA5EA9B1987DC4300AECF7C /* enhatchTweetFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = enhatchTweetFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FA5EA9E1987DC4300AECF7C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6FA5EAA01987DC4300AECF7C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -112,6 +124,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F70B1511989471300AE67FF /* views */ = {
+			isa = PBXGroup;
+			children = (
+				6F70B14E1989470700AE67FF /* FISSlidableTableViewCell.h */,
+				6F70B14F1989470700AE67FF /* FISSlidableTableViewCell.m */,
+				6F0412F219897C2C002CC2E7 /* FISFriendTableViewCell.h */,
+				6F0412F319897C2C002CC2E7 /* FISFriendTableViewCell.m */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
 		6FA5EA921987DC4300AECF7C = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +173,7 @@
 				6FA5EAAD1987DC4300AECF7C /* FISAppDelegate.h */,
 				6FA5EAAE1987DC4300AECF7C /* FISAppDelegate.m */,
 				6FA5EAB01987DC4300AECF7C /* Main_iPhone.storyboard */,
+				6F70B1511989471300AE67FF /* views */,
 				6FA5EAE61988287D00AECF7C /* controllers */,
 				6FA5EAE51988286D00AECF7C /* model */,
 				6FA5EAB31987DC4300AECF7C /* Main_iPad.storyboard */,
@@ -195,8 +219,10 @@
 		6FA5EAE51988286D00AECF7C /* model */ = {
 			isa = PBXGroup;
 			children = (
-				6F70B14B19893E3500AE67FF /* FISTwitterFriend.h */,
-				6F70B14C19893E3500AE67FF /* FISTwitterFriend.m */,
+				6F0412EF1989673E002CC2E7 /* FISTweet.h */,
+				6F0412F01989673E002CC2E7 /* FISTweet.m */,
+				6F70B14B19893E3500AE67FF /* FISTwitterPerson.h */,
+				6F70B14C19893E3500AE67FF /* FISTwitterPerson.m */,
 				6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */,
 				6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */,
 				6FA5EADC1987E6EB00AECF7C /* FISDataStore.h */,
@@ -218,6 +244,8 @@
 				6FA5EAD71987DD8600AECF7C /* FISTwitterFeedTableViewController.m */,
 				6F70B14819893A6600AE67FF /* FISFriendsTableViewController.h */,
 				6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */,
+				6F0412F519898D3C002CC2E7 /* FISFriendFeedTableViewController.h */,
+				6F0412F619898D3C002CC2E7 /* FISFriendFeedTableViewController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -366,7 +394,11 @@
 				6FA5EADB1987E2F700AECF7C /* FISTwitterAPIClient.m in Sources */,
 				6FA5EAD81987DD8600AECF7C /* FISTwitterFeedTableViewController.m in Sources */,
 				6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */,
-				6F70B14D19893E3500AE67FF /* FISTwitterFriend.m in Sources */,
+				6F0412F719898D3C002CC2E7 /* FISFriendFeedTableViewController.m in Sources */,
+				6F0412F419897C2C002CC2E7 /* FISFriendTableViewCell.m in Sources */,
+				6F70B1501989470700AE67FF /* FISSlidableTableViewCell.m in Sources */,
+				6F70B14D19893E3500AE67FF /* FISTwitterPerson.m in Sources */,
+				6F0412F11989673E002CC2E7 /* FISTweet.m in Sources */,
 				6FA5EAAF1987DC4300AECF7C /* FISAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

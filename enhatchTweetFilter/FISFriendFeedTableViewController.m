@@ -1,23 +1,18 @@
 //
-//  FISFriendsTableViewController.m
+//  FISFriendFeedTableViewController.m
 //  enhatchTweetFilter
 //
 //  Created by Carter Levin on 7/30/14.
 //  Copyright (c) 2014 Carter Levin. All rights reserved.
 //
 
-#import "FISFriendsTableViewController.h"
-#import "FISDataStore.h"
-#import "FISTwitterPerson.h"
-#import "FISFriendTableViewCell.h"
+#import "FISFriendFeedTableViewController.h"
 
-@interface FISFriendsTableViewController ()
-
-@property (strong, nonatomic) FISDataStore *store;
+@interface FISFriendFeedTableViewController ()
 
 @end
 
-@implementation FISFriendsTableViewController
+@implementation FISFriendFeedTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,12 +26,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.store = [FISDataStore sharedDataStore];
-    
-    
-    [self.store updateFriendsToShow:^{
-        [self.tableView reloadData];
-    }];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -55,34 +44,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.store.friendsArray count];
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FISFriendTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
-    FISTwitterPerson *friendToShow = self.store.friendsArray[indexPath.row];
-    cell.nameLabel.text = friendToShow.name;
-    cell.screenNameLabel.text = [@"@" stringByAppendingString:friendToShow.screenName];
-    if (friendToShow.profileImage){
-        cell.profileImageView.image = friendToShow.profileImage;
-    }else{
-        [friendToShow getImageForPersonWithBlock:^(NSError *error) {
-            if (!error){
-                cell.profileImageView.image = friendToShow.profileImage;
-            }
-        }];
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    
+    // Configure the cell...
+    
     return cell;
 }
+*/
 
 /*
 // Override to support conditional editing of the table view.

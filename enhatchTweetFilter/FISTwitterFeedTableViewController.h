@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MCSwipeTableViewCell/MCSwipeTableViewCell.h>
 
-@interface FISTwitterFeedTableViewController : UITableViewController //<MCSwipeTableViewCellDelegate>
-
+@interface FISTwitterFeedTableViewController : UITableViewController 
 @end

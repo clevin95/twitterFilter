@@ -22,7 +22,6 @@
 + (instancetype)sharedDataStore;
 - (void) updateTweetsToShow:(void (^)(void))callback;
 - (void) addDislikedTweet:(NSString *)tweet;
-
 - (void) updateFriendsToShow:(void (^)(void))callback;
 
 @end

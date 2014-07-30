@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FISTwitterFriend : NSObject
+@interface FISTwitterPerson : NSObject
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *screenName;
@@ -16,5 +16,7 @@
 @property (strong, nonatomic) UIImage *profileImage;
 @property (strong, nonatomic) NSArray *tweets;
 @property (strong, nonatomic) NSString *userID;
+
+- (void) getImageForPersonWithBlock:(void (^)(NSError *error))finishedBlock;
 
 @end

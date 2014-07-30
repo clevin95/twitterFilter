@@ -30,6 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.globalContainer.hidden = YES;
     // Do any additional setup after loading the view.
 }
 

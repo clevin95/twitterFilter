@@ -9,7 +9,8 @@
 #import "FISDataStore.h"
 #import "FISTwitterAPIClient.h"
 #import "FISCompareSentences.h"
-#import "FISTwitterFriend.h"
+#import "FISTwitterPerson.h"
+#import "FISTweet.h"
 
 @implementation FISDataStore
 
@@ -62,15 +63,23 @@
         if ([tweetArray count] > 0){
             self.lastID = tweetArray[0][@"id_str"];
         }
-        for (NSDictionary *statusDictionary in [tweetArray reverseObjectEnumerator])
+        for (NSDictionary *tweetDictionary in [tweetArray reverseObjectEnumerator])
         {
-            NSString *firstText = [NSString stringWithFormat:@"%@",statusDictionary[@"text"]];
-            CGFloat textScore = [FISCompareSentences compareSentence:firstText withVectorSet:self.dislikedVectors];
+            FISTwitterPerson *tweeter = [[FISTwitterPerson alloc]init];
+            FISTweet *loadedTweet = [[FISTweet alloc]init];
+            tweeter.name = tweetDictionary[@"user"][@"name"];
+            tweeter.screenName = tweetDictionary[@"user"][@"screen_name"];
+            tweeter.profileImageURL = tweetDictionary[@"user"][@"profile_image_url"];
+            
+            NSString *tweetText = [NSString stringWithFormat:@"%@",tweetDictionary[@"text"]];
+            CGFloat textScore = [FISCompareSentences compareSentence:tweetText withVectorSet:self.dislikedVectors];
             if (textScore < 1){
-                [self.filteredArray addObject:firstText];
+                [self.filteredArray addObject:tweetText];
             }
+            loadedTweet.tweeter = tweeter;
+            loadedTweet.content = tweetText;
             [self.scoreArray insertObject:[NSString stringWithFormat:@"%f",textScore] atIndex:0];
-            [weakSelf.tweetsToShow  insertObject:firstText atIndex:0];
+            [weakSelf.tweetsToShow  insertObject:loadedTweet atIndex:0];
         }
         callback();
     }];
@@ -82,7 +91,7 @@
     [FISTwitterAPIClient getFriendsWithBlock:^(NSArray *friendsArray, NSError *error) {
         NSMutableArray *friendsTempArray = [[NSMutableArray alloc]init];
         for (NSDictionary *friend in friendsArray){
-            FISTwitterFriend *newFriend = [[FISTwitterFriend alloc]init];
+            FISTwitterPerson *newFriend = [[FISTwitterPerson alloc]init];
             newFriend.name = friend[@"name"];
             newFriend.userID = friend[@"id_str"];
             newFriend.screenName = friend[@"screen_name"];
