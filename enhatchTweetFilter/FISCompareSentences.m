@@ -10,7 +10,7 @@
 
 @implementation FISCompareSentences
 
-#define SIMILAR_THRESHOLD 1.0
+#define SIMILAR_THRESHOLD 1.45
 
 + (void) compareSentance:(NSString *)sentenceOne withSentance:(NSString *)sentenceTwo
 {
@@ -22,7 +22,6 @@
     CGFloat lowestScore = 1.57;
     for (NSDictionary *vector in vectorSet){
         CGFloat compareScore = [self compareWordDictionary:sentenceVector withDictionary:vector];
-        NSLog(@"%f",compareScore);
         if (lowestScore > compareScore){
             lowestScore = compareScore;
         }
@@ -32,27 +31,20 @@
 
 + (void) addSentence:(NSString *)sentence toVectorSet:(NSMutableArray *)vectorSet
 {
-    
-    
-    NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "] invertedSet] ;
-    
-    
-    NSString *noSpecialSentence = [[[sentence componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""] lowercaseString];
-    NSLog(@"%@",vectorSet);
-    
-    NSDictionary *sentenceVector = [self convertSentanceToVector:noSpecialSentence];
+    NSDictionary *sentenceVector = [self convertSentanceToVector:sentence];
     CGFloat closestScore = 1.57; //(pi/2)
     NSInteger closestVectorIndex = 0;
     for (NSDictionary *vector in vectorSet){
         CGFloat comparisonScore = [self compareWordDictionary:sentenceVector withDictionary:vector];
-        NSLog(@"%f", comparisonScore);
         if (closestScore > comparisonScore){
             closestScore = comparisonScore;
             closestVectorIndex = [vectorSet indexOfObject:vector];
         }
     }
     if (closestScore > SIMILAR_THRESHOLD){
-        [vectorSet addObject:sentenceVector];
+        if ([sentenceVector count] > 0){
+            [vectorSet addObject:sentenceVector];
+        }
     }else {
         vectorSet[closestVectorIndex] = [self addVector:sentenceVector toCompositeVector:vectorSet[closestVectorIndex]];
     }
@@ -80,9 +72,14 @@
 }
 
 
-+ (NSDictionary *) convertSentanceToVector:(NSString *)sentance {
++ (NSDictionary *) convertSentanceToVector:(NSString *)sentence {
+    NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "] invertedSet] ;
+    NSString *noSpecialSentence = [[[sentence componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""] lowercaseString];
+
+    
     NSMutableDictionary *vectorDictionary = [[NSMutableDictionary alloc]init];
-    NSArray *wordArray = [sentance componentsSeparatedByString:@" " ];
+    NSArray *wordArray = [self findAllNounsInString:noSpecialSentence];
+    
     
     for (NSString *word in wordArray) {
         if (vectorDictionary[word]){
@@ -96,11 +93,19 @@
 
 + (CGFloat) compareWordDictionary:(NSDictionary *)dictionaryOne withDictionary:(NSDictionary *)dictionaryTwo
 {
+    
+    
     CGFloat magnitudeOne = [self magnitudeOfVectorDictionary:dictionaryOne];
     CGFloat magnitudeTwo = [self magnitudeOfVectorDictionary:dictionaryTwo];
     CGFloat dotProduct = [self dotProductOfDictionaryOne:dictionaryOne withDictionary:dictionaryTwo];
     CGFloat magnitudeDotProductQuotient = dotProduct/(magnitudeOne * magnitudeTwo);
-    return acos(magnitudeDotProductQuotient);
+    
+    //Checks just in case there was a slight rounding error
+    if (magnitudeDotProductQuotient > 1){
+        return 0.000;
+    }
+    CGFloat theta = acos(magnitudeDotProductQuotient);    
+    return theta;
 }
 
 
@@ -123,6 +128,23 @@
     return sqrt(squaredSum);
 }
 
++ (NSArray *)findAllNounsInString:(NSString *)string {
+    NSLinguisticTaggerOptions options = NSLinguisticTaggerOmitWhitespace | NSLinguisticTaggerOmitPunctuation | NSLinguisticTaggerJoinNames;
+    NSLinguisticTagger *tagger = [[NSLinguisticTagger alloc] initWithTagSchemes: [NSLinguisticTagger availableTagSchemesForLanguage:@"en"] options:options];
+    tagger.string = string;
+    NSMutableArray *allNowns = [[NSMutableArray alloc]init];
+    [tagger enumerateTagsInRange:NSMakeRange(0, [string length]) scheme:NSLinguisticTagSchemeNameTypeOrLexicalClass options:options usingBlock:^(NSString *tag, NSRange tokenRange, NSRange sentenceRange, BOOL *stop) {
+        
+        NSString *token = [string substringWithRange:tokenRange];
+        if ([tag isEqualToString:@"Noun"] || [tag isEqualToString:@"PersonalName"] || [tag isEqualToString:@"PlaceName"]){
+            [allNowns addObject:token];
+        }
+        
+    }];
+    
+    
+    return allNowns;
+}
 
 
 @end

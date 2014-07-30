@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface FISTwitterAPIClient : NSObject
-+ (void)getFeedWithBlockSince:(NSString *)since withBlock:(void (^)(NSMutableArray *tweetArray, NSError *error))tweetCalback;
++ (void)getFriendsWithBlock:(void (^)(NSArray *friendsArray, NSError *error))tweetCalback;
++ (void)getFeedWithBlockSince:(NSString *)since withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetCalback;
 @end

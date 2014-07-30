@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1F70CEBA06AB4F15BC8D30A8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */; };
+		6F70B1471989376200AE67FF /* FISSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B1461989376200AE67FF /* FISSegmentedViewController.m */; };
+		6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */; };
+		6F70B14D19893E3500AE67FF /* FISTwitterFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14C19893E3500AE67FF /* FISTwitterFriend.m */; };
 		6FA5EA9F1987DC4300AECF7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EA9E1987DC4300AECF7C /* Foundation.framework */; };
 		6FA5EAA11987DC4300AECF7C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EAA01987DC4300AECF7C /* CoreGraphics.framework */; };
 		6FA5EAA31987DC4300AECF7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EAA21987DC4300AECF7C /* UIKit.framework */; };
@@ -28,6 +31,7 @@
 		6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EADD1987E6EB00AECF7C /* FISDataStore.m */; };
 		6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */; };
 		6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE31988205000AECF7C /* FISConstants.m */; };
+		6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F70B1451989376200AE67FF /* FISSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISSegmentedViewController.h; sourceTree = "<group>"; };
+		6F70B1461989376200AE67FF /* FISSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISSegmentedViewController.m; sourceTree = "<group>"; };
+		6F70B14819893A6600AE67FF /* FISFriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISFriendsTableViewController.h; sourceTree = "<group>"; };
+		6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISFriendsTableViewController.m; sourceTree = "<group>"; };
+		6F70B14B19893E3500AE67FF /* FISTwitterFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISTwitterFriend.h; sourceTree = "<group>"; };
+		6F70B14C19893E3500AE67FF /* FISTwitterFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISTwitterFriend.m; sourceTree = "<group>"; };
 		6FA5EA9B1987DC4300AECF7C /* enhatchTweetFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = enhatchTweetFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FA5EA9E1987DC4300AECF7C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6FA5EAA01987DC4300AECF7C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -71,6 +81,8 @@
 		6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISCompareSentences.m; sourceTree = "<group>"; };
 		6FA5EAE21988205000AECF7C /* FISConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISConstants.h; sourceTree = "<group>"; };
 		6FA5EAE31988205000AECF7C /* FISConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISConstants.m; sourceTree = "<group>"; };
+		6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISPreferenceVectorField.h; sourceTree = "<group>"; };
+		6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISPreferenceVectorField.m; sourceTree = "<group>"; };
 		8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AB93FF33ED413685BFEEEA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -183,6 +195,10 @@
 		6FA5EAE51988286D00AECF7C /* model */ = {
 			isa = PBXGroup;
 			children = (
+				6F70B14B19893E3500AE67FF /* FISTwitterFriend.h */,
+				6F70B14C19893E3500AE67FF /* FISTwitterFriend.m */,
+				6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */,
+				6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */,
 				6FA5EADC1987E6EB00AECF7C /* FISDataStore.h */,
 				6FA5EADD1987E6EB00AECF7C /* FISDataStore.m */,
 				6FA5EAD91987E2F700AECF7C /* FISTwitterAPIClient.h */,
@@ -196,8 +212,12 @@
 		6FA5EAE61988287D00AECF7C /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6F70B1451989376200AE67FF /* FISSegmentedViewController.h */,
+				6F70B1461989376200AE67FF /* FISSegmentedViewController.m */,
 				6FA5EAD61987DD8600AECF7C /* FISTwitterFeedTableViewController.h */,
 				6FA5EAD71987DD8600AECF7C /* FISTwitterFeedTableViewController.m */,
+				6F70B14819893A6600AE67FF /* FISFriendsTableViewController.h */,
+				6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -336,13 +356,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */,
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,
+				6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */,
+				6F70B1471989376200AE67FF /* FISSegmentedViewController.m in Sources */,
 				6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */,
 				6FA5EADB1987E2F700AECF7C /* FISTwitterAPIClient.m in Sources */,
 				6FA5EAD81987DD8600AECF7C /* FISTwitterFeedTableViewController.m in Sources */,
 				6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */,
+				6F70B14D19893E3500AE67FF /* FISTwitterFriend.m in Sources */,
 				6FA5EAAF1987DC4300AECF7C /* FISAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

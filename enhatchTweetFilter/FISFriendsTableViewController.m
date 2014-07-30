@@ -1,30 +1,28 @@
 //
-//  FISTwitterFeedTableViewController.m
+//  FISFriendsTableViewController.m
 //  enhatchTweetFilter
 //
-//  Created by Carter Levin on 7/29/14.
+//  Created by Carter Levin on 7/30/14.
 //  Copyright (c) 2014 Carter Levin. All rights reserved.
 //
 
-#import "FISTwitterFeedTableViewController.h"
-#import "FISTwitterAPIClient.h"
+#import "FISFriendsTableViewController.h"
 #import "FISDataStore.h"
+#import "FISTwitterFriend.h"
 
-@interface FISTwitterFeedTableViewController ()
-- (IBAction)refreshTapped:(id)sender;
+@interface FISFriendsTableViewController ()
 
 @property (strong, nonatomic) FISDataStore *store;
 
-
 @end
 
-@implementation FISTwitterFeedTableViewController
+@implementation FISFriendsTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-
+        // Custom initialization
     }
     return self;
 }
@@ -32,17 +30,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     self.store = [FISDataStore sharedDataStore];
-    
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"negativeVectorField"];
-    self.store.negativeVectorField =  [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    self.store.dislikedVectors = [self.store.negativeVectorField.vectors mutableCopy];
-
-    
-    [self.store updateTweetsToShow:^{
+    [self.store updateFriendsToShow:^{
         [self.tableView reloadData];
     }];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,6 +48,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -61,52 +59,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.store.tweetsToShow count];
+    return [self.store.friendsArray count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"TweetCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell" forIndexPath:indexPath];
     
-    MCSwipeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (!cell) {
-        cell = [[MCSwipeTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        
-        // Remove inset of iOS 7 separators.
-        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-            cell.separatorInset = UIEdgeInsetsZero;
-        }
-        
-        [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
-        
-        // Setting the background color of the cell.
-        cell.contentView.backgroundColor = [UIColor whiteColor];
-    }
-    
-    cell.tweetTextView.text = self.store.tweetsToShow[indexPath.row];
-    cell.scoreLabel.text = self.store.scoreArray[indexPath.row];
-    UIView *checkView = [[UIView alloc]initWithFrame:cell.frame];
-    checkView.layer.backgroundColor = [UIColor redColor].CGColor;
-    
-    [cell setSwipeGestureWithView:checkView color:[UIColor redColor] mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        [self.store addDislikedTweet:cell.tweetTextView.text];
-        [self.store.tweetsToShow removeObjectAtIndex:([tableView indexPathForCell:cell]).row];
-        [self.store.scoreArray removeObjectAtIndex:([tableView indexPathForCell:cell]).row];
-        [tableView deleteRowsAtIndexPaths:@[[tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
-    }];
+    FISTwitterFriend *friendToShow = self.store.friendsArray[indexPath.row];
+    cell.textLabel.text = friendToShow.name;
     return cell;
 }
-
-- (IBAction)refreshTapped:(id)sender {
-    
-    
-    [self.store updateTweetsToShow:^{
-        [self.tableView reloadData];
-    }];
-}
-
 
 /*
 // Override to support conditional editing of the table view.
@@ -156,6 +121,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 
 @end
