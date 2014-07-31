@@ -126,4 +126,10 @@
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+-(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
+    [self.store.tweetsToShow removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+}
+
 @end

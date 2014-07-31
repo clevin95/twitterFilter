@@ -10,6 +10,7 @@
 #import "FISDataStore.h"
 #import "FISTwitterPerson.h"
 #import "FISFriendTableViewCell.h"
+#import "FISFriendFeedTableViewController.h"
 
 @interface FISFriendsTableViewController ()
 
@@ -87,6 +88,14 @@
     return cell;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *selectedPath = [self.tableView indexPathForCell:sender];
+    FISTwitterPerson *selectedPerson = self.store.friendsArray[selectedPath.row];
+    FISFriendFeedTableViewController *friendFeedController = segue.destinationViewController;
+    friendFeedController.currentFriend = selectedPerson;
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,7 +108,7 @@
 /*
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{FI
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -129,11 +138,7 @@
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
+
 */
 
 @end

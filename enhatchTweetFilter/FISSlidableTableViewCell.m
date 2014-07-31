@@ -28,7 +28,7 @@
 - (void)createViews
 {
     self.isDismissed = NO;
-    CGSize scrollContentSize = CGSizeMake(self.frame.size.width * 2, self.frame.size.height);
+    CGSize scrollContentSize = CGSizeMake(self.frame.size.width * 3, self.frame.size.height);
     self.leftRightScroller = [[UIScrollView alloc]initWithFrame:self.frame];
     self.leftRightScroller.contentSize = scrollContentSize;
     //self.leftRightScroller.contentOffset = CGPointMake(self.frame.size.width, 0);
@@ -45,10 +45,13 @@
     [self.leftRightScroller  addSubview:self.tweetContentView];
     
     self.profileImageView = [[UIImageView alloc] init];
-    self.contentField = [[UITextView alloc]initWithFrame:self.frame];
     
     self.leftRightScroller.showsHorizontalScrollIndicator = NO;
     [self.leftRightScroller  addSubview:self.contentField];
+    
+    self.contentView.layer.shadowOffset = CGSizeMake(10, 0);
+    self.contentView.layer.shadowRadius = 5;
+    self.contentView.layer.shadowOpacity = 0.5;
     [self.contentView addSubview:self.contentField];
     [self createContentSubviews];
 }
@@ -77,20 +80,34 @@
     self.profileImageView.clipsToBounds = YES;
     self.profileImageView.layer.backgroundColor = [UIColor purpleColor].CGColor;
     
+    
+    
     [self.tweetContentView addSubview:self.contentField];
     [self.tweetContentView addSubview:self.nameLabel];
     [self.tweetContentView addSubview:self.profileImageView];
     [self.tweetContentView addSubview:self.screenNameLabel];
+    self.hasRedBackground = YES;
 }
 
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat xOffset = scrollView.contentOffset.x;
-    if (xOffset < 30 && !self.isDismissed){        
+    
+    if (xOffset > 320 && self.hasRedBackground){
+        self.hasRedBackground = false;
+        self.leftRightScroller.layer.backgroundColor = [UIColor greenColor].CGColor;
+    }else if (xOffset < 320 && !self.hasRedBackground){
+        self.hasRedBackground = true;
+        self.leftRightScroller.layer.backgroundColor = [UIColor redColor].CGColor;
+    }
+    if (xOffset < 30 && !self.isDismissed){
         [self.delegate cellSlidRight:self];
         self.isDismissed = YES;
     }
-    
+    if (xOffset > 560 && !self.isDismissed){
+        [self.delegate cellSlidLeft:self];
+        self.isDismissed = YES;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

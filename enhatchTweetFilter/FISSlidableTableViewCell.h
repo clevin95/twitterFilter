@@ -13,6 +13,7 @@
 @protocol CellSliderDelegate <NSObject>
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell;
+-(void)cellSlidLeft:(FISSlidableTableViewCell *)cell;
 
 @end
 
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) UITextView *contentField;
 @property (strong, nonatomic) UIView *tweetContentView;
 @property (strong, nonatomic) UILabel *screenNameLabel;
+@property (nonatomic) BOOL hasRedBackground;
 @property (nonatomic) BOOL isDismissed;
 @property (weak, nonatomic) id <CellSliderDelegate> delegate;
 

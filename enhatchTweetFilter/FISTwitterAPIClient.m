@@ -76,6 +76,7 @@
      }
                                 errorBlock:^(NSError *error)
      {
+         
          NSLog(@"Error");
      }];
 }
@@ -95,93 +96,15 @@
      }];
 }
 
-//+ (void)getFeedWithBlockSince:(NSString *)since withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetCalback {
-//    __block STTwitterAPI *twitter;
-//    LVTwitterOAuthClient * client = [[LVTwitterOAuthClient alloc] initWithConsumerKey:@"EeaSWvnrfBW18u06DPi4Fmhgq" andConsumerSecret:@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb"];
-//
-//    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-//    ACAccountType *twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-//    NSArray *twitterAccounts = [accountStore accountsWithAccountType:twitterAccountType];
-//    //ACAccount *twitterAccount = [twitterAccounts firstObject];
-//
-//    [accountStore requestAccessToAccountsWithType:twitterAccountType options:NULL completion:^(BOOL granted, NSError *error)
-//     {
-//
-//         if (granted)
-//         {
-//             ACAccount *twitterAccount = [twitterAccounts firstObject];
-//
-//             [client requestTokensForAccount:twitterAccount completionBlock:^(NSDictionary *oAuthResponse, NSError *error) {
-//
-//                 NSString *oAuthToken = [oAuthResponse objectForKey: kLVOAuthAccessTokenKey];
-//                 NSString *oAuthSecret = [oAuthResponse objectForKey: kLVOAuthTokenSecretKey];
-//
-//                 twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@"EeaSWvnrfBW18u06DPi4Fmhgq"
-//                                                         consumerSecret:@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb"
-//                                                             oauthToken:oAuthToken oauthTokenSecret:oAuthSecret];
-//                 [twitter verifyCredentialsWithSuccessBlock:^(NSString *bearerToken)
-//                  {
-//                      [twitter getHomeTimelineSinceID:since count:20 successBlock:^(NSArray *statuses) {
-//                          tweetCalback(statuses, nil);
-//                      } errorBlock:^(NSError *error) {
-//                          NSLog(@"Error");
-//                      }];
-//                  } errorBlock:^(NSError *error)
-//                  {
-//                      NSLog(@"ERROR verifying credentials: %@",error.localizedDescription);
-//                  }];
-//
-//
-//             }];
-//         }
-//     }];
-//}
-//
-//+ (void)getFriendsWithBlock:(void (^)(NSArray *friendsArray, NSError *error))friendsCalback {
-//    __block STTwitterAPI *twitter;
-//    LVTwitterOAuthClient * client = [[LVTwitterOAuthClient alloc] initWithConsumerKey:@"EeaSWvnrfBW18u06DPi4Fmhgq" andConsumerSecret:@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb"];
-//
-//    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-//    ACAccountType *twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-//    NSArray *twitterAccounts = [accountStore accountsWithAccountType:twitterAccountType];
-//    //ACAccount *twitterAccount = [twitterAccounts firstObject];
-//
-//    [accountStore requestAccessToAccountsWithType:twitterAccountType options:NULL completion:^(BOOL granted, NSError *error)
-//     {
-//
-//         if (granted)
-//         {
-//             ACAccount *twitterAccount = [twitterAccounts firstObject];
-//
-//             [client requestTokensForAccount:twitterAccount completionBlock:^(NSDictionary *oAuthResponse, NSError *error) {
-//
-//                 NSString *oAuthToken = [oAuthResponse objectForKey: kLVOAuthAccessTokenKey];
-//                 NSString *oAuthSecret = [oAuthResponse objectForKey: kLVOAuthTokenSecretKey];
-//
-//                 twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@"EeaSWvnrfBW18u06DPi4Fmhgq"
-//                                                         consumerSecret:@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb"
-//                                                             oauthToken:oAuthToken oauthTokenSecret:oAuthSecret];
-//                 [twitter verifyCredentialsWithSuccessBlock:^(NSString *bearerToken)
-//                  {
-//                      [twitter getFriendsForScreenName:bearerToken successBlock:^(NSArray *friends) {
-//                          friendsCalback(friends, nil);
-//                      } errorBlock:^(NSError *error) {
-//                          friendsCalback(nil, error);
-//                          NSLog(@"Get friends : %@",error);
-//                      }];
-//
-//
-//                  } errorBlock:^(NSError *error)
-//                  {
-//                      NSLog(@"ERROR verifying credentials: %@",error.localizedDescription);
-//                  }];
-//
-//
-//             }];
-//         }
-//     }];
-//}
-
++ (void)getTweetsWithAccount:(STTwitterAPI *)twitterAccount forUser:(FISTwitterPerson *)user withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetsCallback{
+    [twitterAccount getUserTimelineWithScreenName:user.screenName count:50 successBlock:^(NSArray *statuses) {
+        NSLog(@"%@", statuses);
+        
+        tweetsCallback(statuses, nil);
+    } errorBlock:^(NSError *error) {
+        NSLog(@"%@", error);
+    }];
+}
 
 
 @end

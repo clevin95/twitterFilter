@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "FISPreferenceVectorField.h"
+#import "FISTwitterPerson.h"
+
 @class STTwitterAPI;
 
 @interface FISDataStore : NSObject
@@ -29,6 +31,7 @@
 - (void) addDislikedTweet:(NSString *)tweet;
 - (void) updateFriendsToShow:(void (^)(void))callback;
 - (void) createTwitterAccount:(void (^)(void))callback;
+- (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(void))callback;
 
 @end
 

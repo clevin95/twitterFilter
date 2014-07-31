@@ -7,8 +7,14 @@
 //
 
 #import "FISFriendFeedTableViewController.h"
+#import "FISDataStore.h"
+#import "FISSlidableTableViewCell.h"
+#import "FISTweet.h"
 
-@interface FISFriendFeedTableViewController ()
+
+@interface FISFriendFeedTableViewController () <CellSliderDelegate>
+
+@property (strong, nonatomic) FISDataStore *store;
 
 @end
 
@@ -34,38 +40,69 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.store = [FISDataStore sharedDataStore];
+    [self.store getTweetsForFriend:self.currentFriend withCompletion:^{
+        [self.tableView reloadData];
+    }];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return [self.currentFriend.tweets count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    FISSlidableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendCell" forIndexPath:indexPath];
+    cell.nameLabel.text = self.currentFriend.name;
+    cell.screenNameLabel.text = self.currentFriend.name;
     
+    FISTweet *tweetToShow = self.currentFriend.tweets[indexPath.row];
+    cell.contentField.text = tweetToShow.content;
+    cell.isDismissed = NO;
+    cell.leftRightScroller.contentOffset = CGPointMake(cell.frame.size.width,0);
+    cell.delegate = self;
+    if (self.currentFriend.profileImage){
+        cell.profileImageView.image = self.currentFriend.profileImage;
+    }else{
+        [self.currentFriend  getImageForPersonWithBlock:^(NSError *error) {
+            if (!error){
+                cell.profileImageView.image = self.currentFriend.profileImage;
+            }
+        }];
+    }
+    cell.profileImageView.image = self.currentFriend.profileImage;
     // Configure the cell...
     
     return cell;
 }
-*/
+
+-(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
+    
+    [self.store addDislikedTweet:cell.contentField.text];
+    
+    [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+-(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
+    
+    [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+}
 
 /*
 // Override to support conditional editing of the table view.

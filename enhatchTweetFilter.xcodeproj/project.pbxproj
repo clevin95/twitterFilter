@@ -36,6 +36,9 @@
 		6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */; };
 		6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE31988205000AECF7C /* FISConstants.m */; };
 		6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */; };
+		6FD062AA198A7914007FD3AA /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062A8198A7914007FD3AA /* Model.xcdatamodeld */; };
+		6FD062B3198A7CA9007FD3AA /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B2198A7CA9007FD3AA /* Vector.m */; };
+		6FD062B6198A7CA9007FD3AA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B5198A7CA9007FD3AA /* Word.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +98,11 @@
 		6FA5EAE31988205000AECF7C /* FISConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISConstants.m; sourceTree = "<group>"; };
 		6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISPreferenceVectorField.h; sourceTree = "<group>"; };
 		6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISPreferenceVectorField.m; sourceTree = "<group>"; };
+		6FD062A9198A7914007FD3AA /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		6FD062B1198A7CA9007FD3AA /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		6FD062B2198A7CA9007FD3AA /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
+		6FD062B4198A7CA9007FD3AA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
+		6FD062B5198A7CA9007FD3AA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AB93FF33ED413685BFEEEA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +227,11 @@
 		6FA5EAE51988286D00AECF7C /* model */ = {
 			isa = PBXGroup;
 			children = (
+				6FD062A8198A7914007FD3AA /* Model.xcdatamodeld */,
+				6FD062B4198A7CA9007FD3AA /* Word.h */,
+				6FD062B5198A7CA9007FD3AA /* Word.m */,
+				6FD062B1198A7CA9007FD3AA /* Vector.h */,
+				6FD062B2198A7CA9007FD3AA /* Vector.m */,
 				6F0412EF1989673E002CC2E7 /* FISTweet.h */,
 				6F0412F01989673E002CC2E7 /* FISTweet.m */,
 				6F70B14B19893E3500AE67FF /* FISTwitterPerson.h */,
@@ -386,12 +399,15 @@
 			files = (
 				6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */,
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
+				6FD062B3198A7CA9007FD3AA /* Vector.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,
 				6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */,
 				6F70B1471989376200AE67FF /* FISSegmentedViewController.m in Sources */,
 				6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */,
+				6FD062B6198A7CA9007FD3AA /* Word.m in Sources */,
 				6FA5EADB1987E2F700AECF7C /* FISTwitterAPIClient.m in Sources */,
+				6FD062AA198A7914007FD3AA /* Model.xcdatamodeld in Sources */,
 				6FA5EAD81987DD8600AECF7C /* FISTwitterFeedTableViewController.m in Sources */,
 				6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */,
 				6F0412F719898D3C002CC2E7 /* FISFriendFeedTableViewController.m in Sources */,
@@ -628,6 +644,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6FD062A8198A7914007FD3AA /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6FD062A9198A7914007FD3AA /* Model.xcdatamodel */,
+			);
+			currentVersion = 6FD062A9198A7914007FD3AA /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6FA5EA931987DC4300AECF7C /* Project object */;
 }
