@@ -2,8 +2,14 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Vector" representedClassName="Vector" syncable="YES">
         <attribute name="sign" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tweeter" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="vectorSetForNegative" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VectorSet" syncable="YES"/>
+        <relationship name="vectorSetForPositive" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VectorSet" syncable="YES"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="vector" inverseEntity="Word" syncable="YES"/>
+    </entity>
+    <entity name="VectorSet" syncable="YES">
+        <attribute name="tweeter" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="negativeVectors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vector" syncable="YES"/>
+        <relationship name="positiveVectors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vector" syncable="YES"/>
     </entity>
     <entity name="Word" representedClassName="Word" syncable="YES">
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -12,7 +18,8 @@
         <relationship name="vector" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Vector" inverseName="words" inverseEntity="Vector" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Vector" positionX="27" positionY="-216" width="128" height="88"/>
-        <element name="Word" positionX="243" positionY="-208" width="128" height="103"/>
+        <element name="Vector" positionX="-81" positionY="900" width="128" height="103"/>
+        <element name="Word" positionX="135" positionY="908" width="128" height="103"/>
+        <element name="VectorSet" positionX="-342" positionY="920" width="128" height="88"/>
     </elements>
 </model>

@@ -12,6 +12,7 @@
 #import "FISSlidableTableViewCell.h"
 #import "FISTweet.h"
 #import "FISTwitterPerson.h"
+#import "FISPreferenceAlgorithm.h"
 
 @interface FISTwitterFeedTableViewController () <CellSliderDelegate>
 
@@ -43,9 +44,6 @@
         
     }];
     
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"negativeVectorField"];
-    self.store.negativeVectorField =  [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    self.store.dislikedVectors = [self.store.negativeVectorField.vectors mutableCopy];
     self.store.tweetsToShow =[[NSMutableArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadTweets) name:@"finishedCreatingUser" object:nil];
     
@@ -118,6 +116,10 @@
 
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
+    NSString *testSting = @"test string with word one word two a man with Obama did that in Japan";
+    [FISPreferenceAlgorithm addVector:[FISPreferenceAlgorithm convertSentanceToVector:cell.contentField.text] toCompositeVector:[FISPreferenceAlgorithm convertSentanceToVector:testSting]];
+    
+    
     
     [self.store addDislikedTweet:cell.contentField.text];
     

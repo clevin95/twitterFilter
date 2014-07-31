@@ -141,8 +141,6 @@
         }
         
     }];
-    
-    
     return allNowns;
 }
 

@@ -8,11 +8,14 @@
 
 #import "FISDataStore.h"
 #import "FISTwitterAPIClient.h"
-#import "FISCompareSentences.h"
+#import "FISPreferenceAlgorithm.h"
 #import "FISTweet.h"
 
 @implementation FISDataStore
 
+
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize nonSavingContext = _nonSavingContext;
 
 + (instancetype)sharedDataStore {
     static FISDataStore *_sharedDataStore = nil;
@@ -36,14 +39,6 @@
     }
     return _dislikedVectors;
 }
-
--(FISPreferenceVectorField *)negativeVectorField{
-    if (!_negativeVectorField){
-        _negativeVectorField = [[FISPreferenceVectorField alloc]init];
-    }
-    return _negativeVectorField;
-}
-
 
 -(NSMutableArray *)tweetsToShow{
     if (!_tweetsToShow){
@@ -107,7 +102,7 @@
         tweeter.profileImageURL = tweetDictionary[@"user"][@"profile_image_url"];
         
         NSString *tweetText = [NSString stringWithFormat:@"%@",tweetDictionary[@"text"]];
-        CGFloat textScore = [FISCompareSentences compareSentence:tweetText withVectorSet:self.dislikedVectors];
+        CGFloat textScore = [FISPreferenceAlgorithm compareSentence:tweetText withVectorSet:self.dislikedVectors];
         if (textScore < 1){
             [self.filteredArray addObject:tweetText];
         }
@@ -152,7 +147,7 @@
 
 - (void) filterTweetArray:(NSArray *)tweetArray {
     for (NSString *tweet in tweetArray){
-        [FISCompareSentences compareSentence:tweet withVectorSet:self.dislikedVectors];
+        [FISPreferenceAlgorithm compareSentence:tweet withVectorSet:self.dislikedVectors];
     }
 }
 
@@ -160,10 +155,115 @@
 - (void) addDislikedTweet:(NSString *)tweet  {
     
     
-    [FISCompareSentences addSentence:tweet toVectorSet:self.dislikedVectors];
-    
-    NSLog(@"%@", self.dislikedVectors);
-    self.negativeVectorField.vectors = self.dislikedVectors;
+    [FISPreferenceAlgorithm addSentence:tweet toVectorSubset:self.dislikedVectors];
+    NSLog(@"%d",[self.dislikedVectors count]);
+    /*
+    for (Vector *vector in self.dislikedVectors){
+        NSLog(@"%@", vector.words);
+    }
+     */
+
 }
+
+
+
+- (void)save
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"enhatchTweetFilter.sqlite"];
+    
+    NSError *error = nil;
+    
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
+    NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    
+    [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _managedObjectContext;
+}
+
+- (NSManagedObjectContext *)nonSavingContext
+{
+    if (_nonSavingContext != nil) {
+        return _nonSavingContext;
+    }
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"enhatchTweetFilter.sqlite"];
+    
+    NSError *error = nil;
+    
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
+    NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    
+    [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
+    if (coordinator != nil) {
+        _nonSavingContext = [[NSManagedObjectContext alloc] init];
+        [_nonSavingContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _nonSavingContext;
+}
+
+
+
+
+#pragma mark - Application's Documents directory
+
+- (NSURL *)applicationDocumentsDirectory
+{
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (NSArray*) fetchRequestWithEntityName:(NSString *)entityName SortDescriptor:(NSSortDescriptor*)sortDescriptor andPredicate:(NSPredicate*)predicate
+{
+    
+    NSFetchRequest *genericRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    
+    genericRequest.sortDescriptors = @[sortDescriptor];
+    genericRequest.predicate = predicate;
+    
+    NSArray *dataArray = [self.managedObjectContext executeFetchRequest:genericRequest error:nil];
+    
+    return dataArray;
+}
+
+-(void) updateManagedObject:(NSManagedObject*)currentObject WithNewObject:(NSManagedObject*)newObject InContext:(NSManagedObjectContext*)context
+{
+    [self.managedObjectContext insertObject:newObject];
+    [self.managedObjectContext deleteObject:currentObject];
+    [self save];
+}
+
+
+/*
+-(void)addNewVectorToContext:(Vector*)vector
+{
+    vector = [NSEntityDescription insertNewObjectForEntityForName:@"Vector" inManagedObjectContext:self.managedObjectContext];
+    [self save];
+}
+
+*/
 
 @end
