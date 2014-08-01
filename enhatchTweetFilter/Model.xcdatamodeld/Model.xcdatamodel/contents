@@ -2,14 +2,14 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Vector" representedClassName="Vector" syncable="YES">
         <attribute name="sign" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="vectorSetForNegative" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VectorSet" syncable="YES"/>
-        <relationship name="vectorSetForPositive" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VectorSet" syncable="YES"/>
+        <relationship name="vectorSetForNegative" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VectorSet" inverseName="negativeVectors" inverseEntity="VectorSet" syncable="YES"/>
+        <relationship name="vectorSetForPositive" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VectorSet" inverseName="positiveVectors" inverseEntity="VectorSet" syncable="YES"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="vector" inverseEntity="Word" syncable="YES"/>
     </entity>
-    <entity name="VectorSet" syncable="YES">
+    <entity name="VectorSet" representedClassName="VectorSet" syncable="YES">
         <attribute name="tweeter" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="negativeVectors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vector" syncable="YES"/>
-        <relationship name="positiveVectors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vector" syncable="YES"/>
+        <relationship name="negativeVectors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vector" inverseName="vectorSetForNegative" inverseEntity="Vector" syncable="YES"/>
+        <relationship name="positiveVectors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Vector" inverseName="vectorSetForPositive" inverseEntity="Vector" syncable="YES"/>
     </entity>
     <entity name="Word" representedClassName="Word" syncable="YES">
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>

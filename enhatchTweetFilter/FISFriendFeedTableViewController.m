@@ -32,7 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -73,6 +74,7 @@
     cell.isDismissed = NO;
     cell.leftRightScroller.contentOffset = CGPointMake(cell.frame.size.width,0);
     cell.delegate = self;
+    cell.scoreLabel.text = [NSString stringWithFormat:@"%f",tweetToShow.score];
     if (self.currentFriend.profileImage){
         cell.profileImageView.image = self.currentFriend.profileImage;
     }else{
@@ -83,24 +85,18 @@
         }];
     }
     cell.profileImageView.image = self.currentFriend.profileImage;
-    // Configure the cell...
-    
     return cell;
 }
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
-    
-    [self.store addDislikedTweet:cell.contentField.text];
-    
+    [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:NO];
     [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
-    //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
-    
+    [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:YES];
     [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
-    //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
 

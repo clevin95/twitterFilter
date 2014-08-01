@@ -16,14 +16,22 @@
 
 
 
-
-+ (void) addSentence:(NSString *)sentence toVectorSubset:(NSMutableArray *)vectorSet
+//If an existing vectore in the set has an angle similar to sentence it is added to that composit vector by vector addition
+//If none are close it will be added as a new composit vector
++ (void) addSentence:(NSString *)sentence toVectorSubset:(VectorSet *)vectorSet withPossitive:(BOOL)positive;
 {
-    Vector *sentenceVector = [self convertSentanceToVector:sentence];
+    FISDataStore *store = [FISDataStore sharedDataStore];
+    Vector *sentenceVector = [self convertSentanceToVector:sentence forContext:store.managedObjectContext];
     CGFloat closestScore = 1.57; //(pi/2)
     Vector *closestVector = nil;
+    NSArray *vectorsArray = nil;
+    if (positive){
+        vectorsArray = [vectorSet.positiveVectors allObjects];
+    }else {
+        vectorsArray = [vectorSet.negativeVectors allObjects];
+    }
     
-    for (Vector *vector in vectorSet){
+    for (Vector *vector in vectorsArray){
         CGFloat comparisonScore = [self compareVector:sentenceVector withVector:vector];
         if (closestScore > comparisonScore)
         {
@@ -32,20 +40,23 @@
         }
     }
     if (closestScore > SIMILAR_THRESHOLD){
-        
-        
         if ([sentenceVector.words count] > 0){
-            [vectorSet addObject:sentenceVector];
+            if (positive){
+                [vectorSet addPositiveVectorsObject:sentenceVector];
+            }else {
+                [vectorSet addNegativeVectorsObject:sentenceVector];
+                
+            }
         }
     }else {
-        
         closestVector = [self addVector:sentenceVector toCompositeVector:closestVector];
-        
     }
 }
 
 + (CGFloat) compareSentence:(NSString *)sentance withVectorSet:(NSArray *)vectorSet {
-    Vector *sentenceVector = [self convertSentanceToVector:sentance];
+    
+    FISDataStore *store = [FISDataStore sharedDataStore];
+    Vector *sentenceVector = [self convertSentanceToVector:sentance forContext:store.nonSavingContext];
     CGFloat lowestScore = 1.57;
     for (Vector *vector in vectorSet){
         CGFloat compareScore = [self compareVector:sentenceVector withVector:vector];
@@ -74,19 +85,20 @@
     return compositeVector;
 }
 
-+ (Vector *) convertSentanceToVector:(NSString *)sentence {
-    FISDataStore *store = [FISDataStore sharedDataStore];
++ (Vector *) convertSentanceToVector:(NSString *)sentence forContext:(NSManagedObjectContext *)context {
+    
+    
     NSCharacterSet *notAllowedChars = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "] invertedSet];
     NSString *noSpecialSentence = [[[sentence componentsSeparatedByCharactersInSet:notAllowedChars] componentsJoinedByString:@""] lowercaseString];
     NSArray *wordArray = [self findAllNounsInString:noSpecialSentence];
-    Vector *sentenceVector = [NSEntityDescription insertNewObjectForEntityForName:@"Vector" inManagedObjectContext:store.nonSavingContext];
+    Vector *sentenceVector = [NSEntityDescription insertNewObjectForEntityForName:@"Vector" inManagedObjectContext:context];
     NSMutableDictionary *wordsDictionary = [[NSMutableDictionary alloc]init];
     for (NSString *word in wordArray) {
         if (wordsDictionary[word]){
             Word *addToWord = wordsDictionary[word];
             addToWord.count = @([addToWord.count integerValue] + 1);
         }else{
-            Word *newWordToAdd = [NSEntityDescription insertNewObjectForEntityForName:@"Word" inManagedObjectContext:store.nonSavingContext];
+            Word *newWordToAdd = [NSEntityDescription insertNewObjectForEntityForName:@"Word" inManagedObjectContext:context];
             newWordToAdd.text = word;
             newWordToAdd.count = @(1);
             wordsDictionary[word] = newWordToAdd;
@@ -143,7 +155,6 @@
 }
 
 + (CGFloat)magnitudeOfVector:(Vector *)vector {
-    
     NSInteger squaredSum = 0;
     for (Word *word in vector.words)
     {

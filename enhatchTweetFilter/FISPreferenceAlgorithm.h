@@ -13,9 +13,7 @@
 
 + (CGFloat) compareSentence:(NSString *)sentance withVectorSet:(NSArray *)vectorSet;
 
-+ (Vector *) convertSentanceToVector:(NSString *)sentence;
++ (void) addSentence:(NSString *)sentence toVectorSubset:(VectorSet *)vectorSet withPossitive:(BOOL)positive;
 
-+ (Vector *) addVector:(Vector *)vectorOne toCompositeVector:(Vector *)compositeVector;
-
-+ (void) addSentence:(NSString *)sentence toVectorSubset:(NSMutableArray *)vectorSet;
++ (Vector *) convertSentanceToVector:(NSString *)sentence forContext:(NSManagedObjectContext *)context;
 @end

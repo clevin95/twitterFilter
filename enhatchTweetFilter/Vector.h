@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Word;
+@class VectorSet, Word;
 
 @interface Vector : NSManagedObject
 
-@property (nonatomic, retain) NSString * tweeter;
 @property (nonatomic, retain) NSString * sign;
 @property (nonatomic, retain) NSSet *words;
+@property (nonatomic, retain) VectorSet *vectorSetForPositive;
+@property (nonatomic, retain) VectorSet *vectorSetForNegative;
 @end
 
 @interface Vector (CoreDataGeneratedAccessors)

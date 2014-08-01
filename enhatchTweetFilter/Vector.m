@@ -7,13 +7,15 @@
 //
 
 #import "Vector.h"
+#import "VectorSet.h"
 #import "Word.h"
 
 
 @implementation Vector
 
-@dynamic tweeter;
 @dynamic sign;
 @dynamic words;
+@dynamic vectorSetForPositive;
+@dynamic vectorSetForNegative;
 
 @end

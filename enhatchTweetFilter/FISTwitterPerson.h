@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VectorSet.h"
 
 @interface FISTwitterPerson : NSObject
 
@@ -17,9 +18,7 @@
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (strong, nonatomic) NSString *userID;
 @property (strong, nonatomic) NSMutableArray *negativeVectors;
-
-
-
+@property (strong, nonatomic) VectorSet *personalVectors;
 
 - (void) getImageForPersonWithBlock:(void (^)(NSError *error))finishedBlock;
 

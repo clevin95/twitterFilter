@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) NSString *content;
 @property (strong, nonatomic) FISTwitterPerson *tweeter;
+@property (nonatomic) CGFloat score;
 
 @end

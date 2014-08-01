@@ -95,14 +95,11 @@
                                  errorBlock:^(NSError *error)
      {
          friendsCalback(nil, error);
-         NSLog(@"Get friends : %@",error);
      }];
 }
 
 + (void)getTweetsWithAccount:(STTwitterAPI *)twitterAccount forUser:(FISTwitterPerson *)user withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetsCallback{
-    [twitterAccount getUserTimelineWithScreenName:user.screenName count:50 successBlock:^(NSArray *statuses) {
-        NSLog(@"%@", statuses);
-        
+    [twitterAccount getUserTimelineWithScreenName:user.screenName count:50 successBlock:^(NSArray *statuses) {        
         tweetsCallback(statuses, nil);
     } errorBlock:^(NSError *error) {
         NSLog(@"%@", error);

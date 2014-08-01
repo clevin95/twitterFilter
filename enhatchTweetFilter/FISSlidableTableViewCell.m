@@ -28,18 +28,20 @@
 - (void)createViews
 {
     self.isDismissed = NO;
-    CGSize scrollContentSize = CGSizeMake(self.frame.size.width * 3, self.frame.size.height);
-    self.leftRightScroller = [[UIScrollView alloc]initWithFrame:self.frame];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    CGRect scrollerFrame = CGRectMake(0, 10, self.frame.size.width, self.frame.size.height * 0.90);
+    CGSize scrollContentSize = CGSizeMake(self.frame.size.width * 3, scrollerFrame.size.height);
+    self.leftRightScroller = [[UIScrollView alloc]initWithFrame:scrollerFrame];
     self.leftRightScroller.contentSize = scrollContentSize;
-    //self.leftRightScroller.contentOffset = CGPointMake(self.frame.size.width, 0);
+    
     self.leftRightScroller.layer.backgroundColor = [UIColor redColor].CGColor;
     self.leftRightScroller.pagingEnabled = YES;
     self.leftRightScroller.delegate = self;
     
-    
     [self addSubview:self.leftRightScroller];
     
-    CGRect contentOffset = CGRectOffset(self.frame, self.frame.size.width, 0);
+    CGRect contentOffset = CGRectOffset(self.frame, self.frame.size.width, -5);
     self.tweetContentView = [[UIView alloc]initWithFrame:contentOffset];
     self.tweetContentView.layer.backgroundColor = [UIColor whiteColor].CGColor;
     [self.leftRightScroller  addSubview:self.tweetContentView];
@@ -48,11 +50,22 @@
     
     self.leftRightScroller.showsHorizontalScrollIndicator = NO;
     [self.leftRightScroller  addSubview:self.contentField];
-    
-    self.contentView.layer.shadowOffset = CGSizeMake(10, 0);
-    self.contentView.layer.shadowRadius = 5;
-    self.contentView.layer.shadowOpacity = 0.5;
-    [self.contentView addSubview:self.contentField];
+ 
+    self.contentView.layer.shadowOffset = CGSizeMake(0, 1);
+    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
+    //self.contentView.layer.shadowRadius = 0.3;
+    self.contentView.layer.shadowOpacity = 0.20;
+   /*
+    self.contentView.layer.masksToBounds = YES;
+    self.contentView.layer.shadowColor = [UIColor greenColor].CGColor;
+    self.contentView.layer.shadowOpacity = 0.8;
+    self.contentView.layer.shadowRadius = 12;
+    self.contentView.layer.shadowOffset = CGSizeMake(12.0f, 12.0f);
+    */
+    CGRect shadowFrame = self.tweetContentView.layer.bounds;
+    CGPathRef shadowPath = [UIBezierPath bezierPathWithRect:shadowFrame].CGPath;
+    self.contentView.layer.shadowPath = shadowPath;
+    self.contentView.layer.backgroundColor = [UIColor clearColor].CGColor;
     [self createContentSubviews];
 }
 
@@ -82,20 +95,24 @@
     
     
     
+    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-100, 0, 100, 50)];
+    [self.tweetContentView addSubview:self.scoreLabel];
     [self.tweetContentView addSubview:self.contentField];
     [self.tweetContentView addSubview:self.nameLabel];
     [self.tweetContentView addSubview:self.profileImageView];
     [self.tweetContentView addSubview:self.screenNameLabel];
+    self.backgroundColor = [UIColor clearColor];
+    //self.tweetContentView.backgroundColor = [UIColor clearColor];
     self.hasRedBackground = YES;
 }
 
-
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat xOffset = scrollView.contentOffset.x;
-    
+    //self.leftRightScroller.alpha = xOffset/600;
     if (xOffset > 320 && self.hasRedBackground){
         self.hasRedBackground = false;
         self.leftRightScroller.layer.backgroundColor = [UIColor greenColor].CGColor;
+        
     }else if (xOffset < 320 && !self.hasRedBackground){
         self.hasRedBackground = true;
         self.leftRightScroller.layer.backgroundColor = [UIColor redColor].CGColor;
@@ -113,7 +130,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 

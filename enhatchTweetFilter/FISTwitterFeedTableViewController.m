@@ -38,6 +38,10 @@
 {
     [super viewDidLoad];
 
+    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
     self.store = [FISDataStore sharedDataStore];
     
     [self.store createTwitterAccount:^{
@@ -91,16 +95,14 @@
     }else{
         [tweeter getImageForPersonWithBlock:^(NSError *error) {
             
-            
             if (!error){
                 cell.profileImageView.image = tweeter.profileImage;
             }
         }];
     }
-    
-    
     cell.contentField.text = tweetToShow.content;
     cell.nameLabel.text = tweeter.name;
+    cell.scoreLabel.text = [NSString stringWithFormat:@"%f",tweetToShow.score];
     cell.screenNameLabel.text = [@"@" stringByAppendingString:tweeter.screenName];
     cell.delegate = self;
     return cell;
@@ -116,12 +118,10 @@
 
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
-    NSString *testSting = @"test string with word one word two a man with Obama did that in Japan";
-    [FISPreferenceAlgorithm addVector:[FISPreferenceAlgorithm convertSentanceToVector:cell.contentField.text] toCompositeVector:[FISPreferenceAlgorithm convertSentanceToVector:testSting]];
     
     
     
-    [self.store addDislikedTweet:cell.contentField.text];
+    [self.store addTweet:cell.contentField.text forVectorSet:self.store.gloabalVectors toPositive:NO];
     
     [self.store.tweetsToShow removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
@@ -129,6 +129,9 @@
 }
 
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
+    [self.store addTweet:cell.contentField.text forVectorSet:self.store.gloabalVectors toPositive:YES];
+    
+    
     [self.store.tweetsToShow removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];

@@ -8,6 +8,7 @@
 
 #import "FISTwitterPerson.h"
 #import <AFNetworking/AFNetworking.h>
+#import "FISDataStore.h"
 
 @implementation FISTwitterPerson
 
@@ -17,6 +18,28 @@
         _negativeVectors = [[NSMutableArray alloc]init];
     }
     return _negativeVectors;
+}
+
+
+
+-(VectorSet *)personalVectors{
+    
+    
+    FISDataStore *store = [FISDataStore sharedDataStore];
+    if (!_personalVectors){
+        NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"VectorSet"];
+        NSSortDescriptor *tweeterSort = [NSSortDescriptor sortDescriptorWithKey:@"tweeter" ascending:YES];
+        fetch.sortDescriptors = @[tweeterSort];
+        fetch.predicate = [NSPredicate predicateWithFormat:@"tweeter == %@", self.name];
+        NSArray *personalVectorsArray = [store.managedObjectContext executeFetchRequest:fetch error:nil];
+        if ([personalVectorsArray count] > 0){
+            _personalVectors = personalVectorsArray[0];
+        }else {
+            _personalVectors = [NSEntityDescription insertNewObjectForEntityForName:@"VectorSet" inManagedObjectContext:store.managedObjectContext];
+            _personalVectors.tweeter = self.name;
+        }
+    }
+    return _personalVectors;
 }
 
 

@@ -29,6 +29,10 @@
 @property (nonatomic) BOOL isDismissed;
 @property (weak, nonatomic) id <CellSliderDelegate> delegate;
 
+
+
+@property (strong, nonatomic) UILabel *scoreLabel;
+
 @end
 
 

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FISPreferenceVectorField.h"
+#import "VectorSet.h"
 #import "FISTwitterPerson.h"
 #import <CoreData/CoreData.h>
 
@@ -16,7 +16,7 @@
 @interface FISDataStore : NSObject
 
 @property (strong, nonatomic) NSMutableArray *tweetsToShow;
-@property (strong, nonatomic) NSMutableArray *dislikedVectors;
+@property (strong, nonatomic) VectorSet *gloabalVectors;
 @property (strong, nonatomic) NSString *lastID;
 @property (strong, nonatomic) NSMutableArray *scoreArray;
 @property (strong, nonatomic) NSMutableArray *filteredArray;
@@ -30,8 +30,9 @@
 @property (strong, nonatomic, readonly) NSManagedObjectContext *nonSavingContext;
 
 + (instancetype)sharedDataStore;
+- (void) save;
 - (void) updateTweetsToShow:(void (^)(void))callback;
-- (void) addDislikedTweet:(NSString *)tweet;
+- (void) addTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive;
 - (void) updateFriendsToShow:(void (^)(void))callback;
 - (void) createTwitterAccount:(void (^)(void))callback;
 - (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(void))callback;

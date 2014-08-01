@@ -33,12 +33,24 @@
     return _scoreArray;
 }
 
--(NSMutableArray *)dislikedVectors{
-    if (!_dislikedVectors){
-        _dislikedVectors = [[NSMutableArray alloc]init];
+
+-(VectorSet *)gloabalVectors{
+    if (!_gloabalVectors){
+        NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"VectorSet"];
+        NSSortDescriptor *tweeterSort = [NSSortDescriptor sortDescriptorWithKey:@"tweeter" ascending:YES];
+        fetch.sortDescriptors = @[tweeterSort];
+        fetch.predicate = [NSPredicate predicateWithFormat:@"tweeter == 'global'"];
+        NSArray *gloabalVectorsArray = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+        if ([gloabalVectorsArray count] > 0){
+            _gloabalVectors = gloabalVectorsArray[0];
+        }else {
+            _gloabalVectors = [NSEntityDescription insertNewObjectForEntityForName:@"VectorSet" inManagedObjectContext:self.managedObjectContext];
+            _gloabalVectors.tweeter = @"global";
+        }
     }
-    return _dislikedVectors;
+    return _gloabalVectors;
 }
+
 
 -(NSMutableArray *)tweetsToShow{
     if (!_tweetsToShow){
@@ -55,7 +67,7 @@
         if ([tweetArray count] > 0){
             self.lastID = tweetArray[0][@"id_str"];
         }
-        weakSelf.tweetsToShow = [self convertRawTweetsToObjects:tweetArray];
+        weakSelf.tweetsToShow = [self convertRawTweetsToObjects:tweetArray forTweeter:nil];
         callback();
     }];
 }
@@ -91,7 +103,8 @@
     return friendsTempArray;
 }
 
-- (NSMutableArray *) convertRawTweetsToObjects:(NSArray *)rawTweets {
+//Method asigns score from the global vectors if tweeter is nil/
+- (NSMutableArray *) convertRawTweetsToObjects:(NSArray *)rawTweets forTweeter:(FISTwitterPerson *)person {
     NSMutableArray *tweetsArray = [[NSMutableArray alloc]init];
     for (NSDictionary *tweetDictionary in [rawTweets reverseObjectEnumerator])
     {
@@ -100,15 +113,26 @@
         tweeter.name = tweetDictionary[@"user"][@"name"];
         tweeter.screenName = tweetDictionary[@"user"][@"screen_name"];
         tweeter.profileImageURL = tweetDictionary[@"user"][@"profile_image_url"];
-        
         NSString *tweetText = [NSString stringWithFormat:@"%@",tweetDictionary[@"text"]];
-        CGFloat textScore = [FISPreferenceAlgorithm compareSentence:tweetText withVectorSet:self.dislikedVectors];
-        if (textScore < 1){
-            [self.filteredArray addObject:tweetText];
+        
+
+        NSArray *dislikedVectors = nil;
+        NSArray *likedVectors = nil;
+        if (!person){
+            dislikedVectors = [self.gloabalVectors.negativeVectors allObjects];
+            likedVectors = [self.gloabalVectors.positiveVectors allObjects];
         }
+        else {
+            dislikedVectors = [person.personalVectors.negativeVectors allObjects];
+            likedVectors = [person.personalVectors.positiveVectors allObjects];
+        }
+        
+        
+        CGFloat negativeScore = [FISPreferenceAlgorithm compareSentence:tweetText withVectorSet:dislikedVectors];
+        CGFloat positiveScore = (1.57 - [FISPreferenceAlgorithm compareSentence:tweetText withVectorSet:likedVectors]);
+        loadedTweet.score = positiveScore + negativeScore;
         loadedTweet.tweeter = tweeter;
         loadedTweet.content = tweetText;
-        [self.scoreArray insertObject:[NSString stringWithFormat:@"%f",textScore] atIndex:0];
         [tweetsArray  insertObject:loadedTweet atIndex:0];
     }
     return tweetsArray;
@@ -121,7 +145,6 @@
          if (!error)
          {
              self.credentialAuthorized = YES;
-             
              self.twitterAccount = aPITwitterAccount;
              [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedCreatingUser" object:nil];
              callback();
@@ -136,7 +159,7 @@
 
 - (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(void))callback {
     [FISTwitterAPIClient getTweetsWithAccount:self.twitterAccount forUser:friend withBlock:^(NSArray *tweetArray, NSError *error) {
-        NSMutableArray *tweetsByFriend = [self convertRawTweetsToObjects:tweetArray];
+        NSMutableArray *tweetsByFriend = [self convertRawTweetsToObjects:tweetArray forTweeter:friend];
         friend.tweets = tweetsByFriend;
         callback();
     }];
@@ -146,23 +169,17 @@
 
 
 - (void) filterTweetArray:(NSArray *)tweetArray {
+    NSMutableArray *dislikedVectors = [[NSMutableArray alloc]initWithArray:[self.gloabalVectors.negativeVectors allObjects]];
     for (NSString *tweet in tweetArray){
-        [FISPreferenceAlgorithm compareSentence:tweet withVectorSet:self.dislikedVectors];
+        
+        [FISPreferenceAlgorithm compareSentence:tweet withVectorSet:dislikedVectors];
     }
 }
 
 
-- (void) addDislikedTweet:(NSString *)tweet  {
-    
-    
-    [FISPreferenceAlgorithm addSentence:tweet toVectorSubset:self.dislikedVectors];
-    NSLog(@"%d",[self.dislikedVectors count]);
-    /*
-    for (Vector *vector in self.dislikedVectors){
-        NSLog(@"%@", vector.words);
-    }
-     */
-
+- (void) addTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive {
+   // NSMutableArray *dislikedVectors = [[NSMutableArray alloc]initWithArray:[self.gloabalVectors.negativeVectors allObjects]];
+    [FISPreferenceAlgorithm addSentence:tweet toVectorSubset:vectorSet withPossitive:positive];
 }
 
 
@@ -189,13 +206,10 @@
     }
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"enhatchTweetFilter.sqlite"];
-    
     NSError *error = nil;
-    
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
     NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
-    
     [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
     if (coordinator != nil) {
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
@@ -227,10 +241,6 @@
 }
 
 
-
-
-#pragma mark - Application's Documents directory
-
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -255,15 +265,5 @@
     [self.managedObjectContext deleteObject:currentObject];
     [self save];
 }
-
-
-/*
--(void)addNewVectorToContext:(Vector*)vector
-{
-    vector = [NSEntityDescription insertNewObjectForEntityForName:@"Vector" inManagedObjectContext:self.managedObjectContext];
-    [self save];
-}
-
-*/
 
 @end

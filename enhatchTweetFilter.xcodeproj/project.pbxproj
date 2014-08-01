@@ -37,9 +37,11 @@
 		6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE31988205000AECF7C /* FISConstants.m */; };
 		6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */; };
 		6FD062AA198A7914007FD3AA /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062A8198A7914007FD3AA /* Model.xcdatamodeld */; };
-		6FD062B3198A7CA9007FD3AA /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B2198A7CA9007FD3AA /* Vector.m */; };
 		6FD062B6198A7CA9007FD3AA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B5198A7CA9007FD3AA /* Word.m */; };
 		6FD062B9198A84BE007FD3AA /* FISPreferenceAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */; };
+		6FD062BC198AB9B2007FD3AA /* VectorSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062BB198AB9B2007FD3AA /* VectorSet.m */; };
+		6FD062BF198AB9B3007FD3AA /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062BE198AB9B3007FD3AA /* Vector.m */; };
+		6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,12 +102,15 @@
 		6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISPreferenceVectorField.h; sourceTree = "<group>"; };
 		6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISPreferenceVectorField.m; sourceTree = "<group>"; };
 		6FD062A9198A7914007FD3AA /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		6FD062B1198A7CA9007FD3AA /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
-		6FD062B2198A7CA9007FD3AA /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
 		6FD062B4198A7CA9007FD3AA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
 		6FD062B5198A7CA9007FD3AA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
 		6FD062B7198A84BE007FD3AA /* FISPreferenceAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISPreferenceAlgorithm.h; sourceTree = "<group>"; };
 		6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISPreferenceAlgorithm.m; sourceTree = "<group>"; };
+		6FD062BA198AB9B2007FD3AA /* VectorSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorSet.h; sourceTree = "<group>"; };
+		6FD062BB198AB9B2007FD3AA /* VectorSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorSet.m; sourceTree = "<group>"; };
+		6FD062BD198AB9B3007FD3AA /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		6FD062BE198AB9B3007FD3AA /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
+		6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnhatchFullImage.png; sourceTree = "<group>"; };
 		8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AB93FF33ED413685BFEEEA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +204,9 @@
 		6FA5EAA51987DC4300AECF7C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */,
+				6FA5EADF1987E8E100AECF7C /* FISCompareSentences.h */,
+				6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */,
 				6FA5EAE21988205000AECF7C /* FISConstants.h */,
 				6FA5EAE31988205000AECF7C /* FISConstants.m */,
 				6FA5EAA61987DC4300AECF7C /* enhatchTweetFilter-Info.plist */,
@@ -231,10 +239,12 @@
 			isa = PBXGroup;
 			children = (
 				6FD062A8198A7914007FD3AA /* Model.xcdatamodeld */,
+				6FD062BD198AB9B3007FD3AA /* Vector.h */,
+				6FD062BE198AB9B3007FD3AA /* Vector.m */,
+				6FD062BA198AB9B2007FD3AA /* VectorSet.h */,
+				6FD062BB198AB9B2007FD3AA /* VectorSet.m */,
 				6FD062B4198A7CA9007FD3AA /* Word.h */,
 				6FD062B5198A7CA9007FD3AA /* Word.m */,
-				6FD062B1198A7CA9007FD3AA /* Vector.h */,
-				6FD062B2198A7CA9007FD3AA /* Vector.m */,
 				6F0412EF1989673E002CC2E7 /* FISTweet.h */,
 				6F0412F01989673E002CC2E7 /* FISTweet.m */,
 				6F70B14B19893E3500AE67FF /* FISTwitterPerson.h */,
@@ -247,8 +257,6 @@
 				6FA5EADA1987E2F700AECF7C /* FISTwitterAPIClient.m */,
 				6FD062B7198A84BE007FD3AA /* FISPreferenceAlgorithm.h */,
 				6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */,
-				6FA5EADF1987E8E100AECF7C /* FISCompareSentences.h */,
-				6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -350,6 +358,7 @@
 				6FA5EAB51987DC4300AECF7C /* Main_iPad.storyboard in Resources */,
 				6FA5EABA1987DC4300AECF7C /* Images.xcassets in Resources */,
 				6FA5EAB21987DC4300AECF7C /* Main_iPhone.storyboard in Resources */,
+				6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */,
 				6FA5EAA91987DC4300AECF7C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,7 +413,6 @@
 			files = (
 				6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */,
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
-				6FD062B3198A7CA9007FD3AA /* Vector.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,
 				6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */,
@@ -417,10 +425,12 @@
 				6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */,
 				6F0412F719898D3C002CC2E7 /* FISFriendFeedTableViewController.m in Sources */,
 				6F0412F419897C2C002CC2E7 /* FISFriendTableViewCell.m in Sources */,
+				6FD062BF198AB9B3007FD3AA /* Vector.m in Sources */,
 				6FD062B9198A84BE007FD3AA /* FISPreferenceAlgorithm.m in Sources */,
 				6F70B1501989470700AE67FF /* FISSlidableTableViewCell.m in Sources */,
 				6F70B14D19893E3500AE67FF /* FISTwitterPerson.m in Sources */,
 				6F0412F11989673E002CC2E7 /* FISTweet.m in Sources */,
+				6FD062BC198AB9B2007FD3AA /* VectorSet.m in Sources */,
 				6FA5EAAF1987DC4300AECF7C /* FISAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
