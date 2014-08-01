@@ -11,6 +11,7 @@
 #import "FISTwitterPerson.h"
 #import "FISFriendTableViewCell.h"
 #import "FISFriendFeedTableViewController.h"
+#import "FISAlertView.h"
 
 @interface FISFriendsTableViewController ()
 
@@ -45,7 +46,12 @@
 }
 
 - (void) loadFriends{
-    [self.store updateFriendsToShow:^{
+    [self.store updateFriendsToShow:^(NSError *error)
+    {
+        if (error)
+        {
+            [self displayAlertWithError:error];
+        }
         [self.tableView reloadData];
     }];
 }
@@ -94,6 +100,31 @@
     FISTwitterPerson *selectedPerson = self.store.friendsArray[selectedPath.row];
     FISFriendFeedTableViewController *friendFeedController = segue.destinationViewController;
     friendFeedController.currentFriend = selectedPerson;
+}
+
+-(void)displayAlertWithError:(NSError*)error
+{
+    NSString *retryTitle = nil;
+    if (error.code == 400)
+    {
+        retryTitle = @"Retry";
+    }
+    
+    FISAlertView *friendsAlertView = [[FISAlertView alloc]initWithTitle:@"Error"
+                                                               message:error.domain
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:retryTitle
+                                                       completionBlock:^(UIAlertView *alertview, NSInteger index){}];
+    
+    friendsAlertView.errorCompletion = ^(UIAlertView *view, NSInteger index)
+    {
+        if (index == 1)
+        {
+            [self loadFriends];
+        };
+        
+    };
+    [friendsAlertView show];
 }
 
 /*

@@ -13,6 +13,7 @@
 #import "FISTweet.h"
 #import "FISTwitterPerson.h"
 #import "FISPreferenceAlgorithm.h"
+#import "FISAlertView.h"
 
 @interface FISTwitterFeedTableViewController () <CellSliderDelegate>
 
@@ -44,21 +45,28 @@
     
     self.store = [FISDataStore sharedDataStore];
     
-    [self.store createTwitterAccount:^{
-        
+    [self.store createTwitterAccount:^(NSError *error)
+    {
+        if (error)
+        {
+            [self displayAlertWithError:error];
+        }
     }];
     
     self.store.tweetsToShow =[[NSMutableArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadTweets) name:@"finishedCreatingUser" object:nil];
-    
-    
-    
 }
 
-- (void)loadTweets {
-    [self.store updateTweetsToShow:^{
-        [self.tableView reloadData];
-    }];
+- (void)loadTweets
+{
+    [self.store updateTweetsToShow:^(NSError *error)
+     {
+         if (error)
+         {
+             [self displayAlertWithError:error];
+         }
+         [self.tableView reloadData];
+     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,11 +101,9 @@
     if (tweeter.profileImage){
         cell.profileImageView.image = tweeter.profileImage;
     }else{
-        [tweeter getImageForPersonWithBlock:^(NSError *error) {
-            
-            if (!error){
-                cell.profileImageView.image = tweeter.profileImage;
-            }
+        [tweeter getImageForPersonWithBlock:^(NSError *error)
+        {
+            cell.profileImageView.image = tweeter.profileImage;
         }];
     }
     cell.contentField.text = tweetToShow.content;
@@ -110,10 +116,14 @@
 
 - (IBAction)refreshTapped:(id)sender {
     
-    
-    [self.store updateTweetsToShow:^{
-        [self.tableView reloadData];
-    }];
+    [self.store updateTweetsToShow:^(NSError *error)
+     {
+         if (error)
+         {
+             [self displayAlertWithError:error];
+         }
+         [self.tableView reloadData];
+     }];
 }
 
 
@@ -135,6 +145,31 @@
     [self.store.tweetsToShow removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+-(void)displayAlertWithError:(NSError*)error
+{
+    NSString *retryTitle = nil;
+    if (error.code == 400)
+    {
+        retryTitle = @"Retry";
+    }
+
+    FISAlertView *tweetsAlertView = [[FISAlertView alloc]initWithTitle:@"Error"
+                                                                     message:error.domain
+                                                           cancelButtonTitle:@"OK"
+                                                           otherButtonTitles:retryTitle
+                                                             completionBlock:^(UIAlertView *alertview, NSInteger index){}];
+    
+    tweetsAlertView.errorCompletion = ^(UIAlertView *view, NSInteger index)
+    {
+        if (index == 1)
+        {
+            [self loadTweets];
+        };
+    
+    };
+    [tweetsAlertView show];
 }
 
 @end

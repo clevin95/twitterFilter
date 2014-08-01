@@ -10,6 +10,7 @@
 #import "FISDataStore.h"
 #import "FISSlidableTableViewCell.h"
 #import "FISTweet.h"
+#import "FISAlertView.h"
 
 
 @interface FISFriendFeedTableViewController () <CellSliderDelegate>
@@ -44,7 +45,17 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.store = [FISDataStore sharedDataStore];
-    [self.store getTweetsForFriend:self.currentFriend withCompletion:^{
+    [self loadTweets];
+}
+
+-(void)loadTweets
+{
+    [self.store getTweetsForFriend:self.currentFriend withCompletion:^(NSError *error)
+    {
+        if (error)
+        {
+            [self displayAlertWithError:error];
+        }
         [self.tableView reloadData];
     }];
 }
@@ -98,6 +109,31 @@
     [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:YES];
     [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+-(void)displayAlertWithError:(NSError*)error
+{
+    NSString *retryTitle = nil;
+    if (error.code == 400)
+    {
+        retryTitle = @"Retry";
+    }
+    
+    FISAlertView *tweetsAlertView = [[FISAlertView alloc]initWithTitle:@"Error"
+                                                                message:error.domain
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:retryTitle
+                                                        completionBlock:^(UIAlertView *alertview, NSInteger index){}];
+    
+    tweetsAlertView.errorCompletion = ^(UIAlertView *view, NSInteger index)
+    {
+        if (index == 1)
+        {
+            [self loadTweets];
+        };
+        
+    };
+    [tweetsAlertView show];
 }
 
 /*

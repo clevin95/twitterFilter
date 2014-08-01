@@ -59,35 +59,50 @@
     return _tweetsToShow;
 }
 
-- (void) updateTweetsToShow:(void (^)(void))callback {
+- (void) updateTweetsToShow:(void (^)(NSError*))callback {
     __weak typeof(self) weakSelf = self;
 
     
-    [FISTwitterAPIClient getFeedWithBlockForAccount:self.twitterAccount Since:self.lastID withBlock:^(NSArray *tweetArray, NSError *error) {
-        if ([tweetArray count] > 0){
-            self.lastID = tweetArray[0][@"id_str"];
+    [FISTwitterAPIClient getFeedWithBlockForAccount:self.twitterAccount Since:self.lastID withBlock:^(NSArray *tweetArray, NSError *error)
+    {
+        if (!error)
+        {
+            if ([tweetArray count] > 0)
+            {
+                self.lastID = tweetArray[0][@"id_str"];
+            }
+            weakSelf.tweetsToShow = [self convertRawTweetsToObjects:tweetArray forTweeter:nil];
         }
-        weakSelf.tweetsToShow = [self convertRawTweetsToObjects:tweetArray forTweeter:nil];
-        callback();
+        callback(error);
     }];
 }
 
 
-- (void) updateFriendsToShow:(void (^)(void))callback {
+- (void) updateFriendsToShow:(void (^)(NSError*))callback
+{
     __weak typeof(self) weakSelf = self;
-    [FISTwitterAPIClient getFriendsForAccount:self.twitterAccount WithBlock:^(NSArray *friendsArray, NSError *error) {
-        NSMutableArray *friendsTempArray = [[NSMutableArray alloc]init];
-        for (NSDictionary *friend in friendsArray){
-            FISTwitterPerson *newFriend = [[FISTwitterPerson alloc]init];
-            newFriend.name = friend[@"name"];
-            newFriend.userID = friend[@"id_str"];
-            newFriend.screenName = friend[@"screen_name"];
-            newFriend.profileImageURL = friend[@"profile_image_url"];
-            [friendsTempArray addObject:newFriend];
+    
+    [FISTwitterAPIClient getFriendsForAccount:self.twitterAccount WithBlock:^(NSArray *friendsArray, NSError *error)
+    {
+        if (!error)
+        {
+            NSMutableArray *friendsTempArray = [[NSMutableArray alloc]init];
+            for (NSDictionary *friend in friendsArray)
+            {
+                FISTwitterPerson *newFriend = [[FISTwitterPerson alloc]init];
+                newFriend.name = friend[@"name"];
+                newFriend.userID = friend[@"id_str"];
+                newFriend.screenName = friend[@"screen_name"];
+                newFriend.profileImageURL = friend[@"profile_image_url"];
+                [friendsTempArray addObject:newFriend];
+            }
+            weakSelf.friendsArray = friendsTempArray;
         }
-        weakSelf.friendsArray = friendsTempArray;
-        callback();
+        callback(error);
     }];
+
+    
+    
 }
 
 - (NSArray *) convertRawFriendsToObjects:(NSArray *)rawFriends {
@@ -138,7 +153,7 @@
     return tweetsArray;
 }
 
-- (void) createTwitterAccount:(void (^)(void))callback
+- (void) createTwitterAccount:(void (^)(NSError*))callback
 {
     [FISTwitterAPIClient createTwitterAccountWithTwitterAccount:self.twitterAccount CompletionBlock:^(STTwitterAPI *aPITwitterAccount, NSError *error)
      {
@@ -147,21 +162,21 @@
              self.credentialAuthorized = YES;
              self.twitterAccount = aPITwitterAccount;
              [[NSNotificationCenter defaultCenter] postNotificationName:@"finishedCreatingUser" object:nil];
-             callback();
          }
-         else
-         {
-             NSLog(@"Error - %@",error.localizedDescription);
-         }
+        callback(error);
      }];
 }
 
 
-- (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(void))callback {
-    [FISTwitterAPIClient getTweetsWithAccount:self.twitterAccount forUser:friend withBlock:^(NSArray *tweetArray, NSError *error) {
-        NSMutableArray *tweetsByFriend = [self convertRawTweetsToObjects:tweetArray forTweeter:friend];
-        friend.tweets = tweetsByFriend;
-        callback();
+- (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(NSError*))callback
+{
+    [FISTwitterAPIClient getTweetsWithAccount:self.twitterAccount forUser:friend withBlock:^(NSArray *tweetArray, NSError *error)
+    {
+        if (!error) {
+            NSMutableArray *tweetsByFriend = [self convertRawTweetsToObjects:tweetArray forTweeter:friend];
+            friend.tweets = tweetsByFriend;
+        }
+        callback(error);
     }];
 }
 

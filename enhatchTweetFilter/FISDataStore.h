@@ -31,11 +31,11 @@
 
 + (instancetype)sharedDataStore;
 - (void) save;
-- (void) updateTweetsToShow:(void (^)(void))callback;
+- (void) updateTweetsToShow:(void (^)(NSError *error))callback;
 - (void) addTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive;
-- (void) updateFriendsToShow:(void (^)(void))callback;
-- (void) createTwitterAccount:(void (^)(void))callback;
-- (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(void))callback;
+- (void) updateFriendsToShow:(void (^)(NSError *error))callback;
+- (void) createTwitterAccount:(void (^)(NSError *error))callback;
+- (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(NSError *error))callback;
 
 @end
 

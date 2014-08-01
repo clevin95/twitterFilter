@@ -20,6 +20,9 @@
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *twitterAccounts = [accountStore accountsWithAccountType:twitterAccountType];
+    if ([twitterAccounts count]>0)
+    {
+        
     [accountStore requestAccessToAccountsWithType:twitterAccountType options:NULL completion:^(BOOL granted, NSError *error)
      {
          if (granted)
@@ -28,13 +31,26 @@
              
              [client requestTokensForAccount:twitterAccount completionBlock:^(NSDictionary *oAuthResponse, NSError *error)
               {
-                  NSString *oAuthToken = [oAuthResponse objectForKey: kLVOAuthAccessTokenKey];
-                  NSString *oAuthSecret = [oAuthResponse objectForKey: kLVOAuthTokenSecretKey];
-                  oAuthBlock(oAuthToken,oAuthSecret,error);
-                  
+                  if (!error)
+                  {
+                      NSString *oAuthToken = [oAuthResponse objectForKey: kLVOAuthAccessTokenKey];
+                      NSString *oAuthSecret = [oAuthResponse objectForKey: kLVOAuthTokenSecretKey];
+                      oAuthBlock(oAuthToken,oAuthSecret,error);
+                  }
+                  else
+                  {
+                      NSError *customError = [[NSError alloc]initWithDomain:@"Could Not Verify Account" code:300 userInfo:nil];
+                      oAuthBlock(nil,nil,customError);
+                  }
               }];
          }
+         else
+         {
+             NSError *customError = [[NSError alloc]initWithDomain:@"Access Denied By User" code:300 userInfo:nil];
+             oAuthBlock(nil,nil,customError);
+         }
      }];
+    }
 }
 
 + (void)createTwitterAccountWithTwitterAccount:(STTwitterAPI*)twitterAPI CompletionBlock:(void (^)(STTwitterAPI *aPITwitterAccount,NSError *error))accountBlock
@@ -44,7 +60,7 @@
     [self getOAuthWithBlock:^(NSString *oAuthToken, NSString *oAuthSecret, NSError *error) {
         if (error)
         {
-            NSLog(@"OAuth Error = %@",error.localizedDescription);
+            accountBlock(nil,error);
         }
         else
         {
@@ -58,8 +74,8 @@
                  accountBlock(twitterAPIBlock,nil);
              } errorBlock:^(NSError *error)
              {
-                 NSLog(@"ERROR verifying credentials: %@",error.localizedDescription);
-                 accountBlock(nil,error);
+                 NSError *customError = [[NSError alloc]initWithDomain:@"Could Not Verify Credentials" code:300 userInfo:nil];
+                 accountBlock(nil,customError);
              }];
         }
     }];
@@ -71,38 +87,37 @@
                                      count:20
                               successBlock:^(NSArray *statuses)
      {
-         
          tweetCalback(statuses, nil);
-         
-         
-         
      }
                                 errorBlock:^(NSError *error)
      {
-         
-         NSLog(@"Error");
+         NSError *customError = [[NSError alloc]initWithDomain:@"Error Retreiving Data" code:400 userInfo:nil];
+         tweetCalback(nil, customError);
      }];
 }
+
+
 
 + (void)getFriendsForAccount:(STTwitterAPI*)twitterAccount WithBlock:(void (^)(NSArray *friendsArray, NSError *error))friendsCalback {
     
     [twitterAccount getFriendsForScreenName:twitterAccount.userName
                                successBlock:^(NSArray *friends)
      {
-         
          friendsCalback(friends, nil);
      }
                                  errorBlock:^(NSError *error)
      {
-         friendsCalback(nil, error);
+         NSError *customError = [[NSError alloc]initWithDomain:@"Error Retreiving Friends" code:400 userInfo:nil];
+         friendsCalback(nil, customError);
      }];
 }
 
 + (void)getTweetsWithAccount:(STTwitterAPI *)twitterAccount forUser:(FISTwitterPerson *)user withBlock:(void (^)(NSArray *tweetArray, NSError *error))tweetsCallback{
-    [twitterAccount getUserTimelineWithScreenName:user.screenName count:50 successBlock:^(NSArray *statuses) {        
+    [twitterAccount getUserTimelineWithScreenName:user.screenName count:50 successBlock:^(NSArray *statuses) {
         tweetsCallback(statuses, nil);
     } errorBlock:^(NSError *error) {
-        NSLog(@"%@", error);
+        NSError *customError = [[NSError alloc]initWithDomain:@"Error Retreiving Data" code:400 userInfo:nil];
+        tweetsCallback(nil, customError);
     }];
 }
 

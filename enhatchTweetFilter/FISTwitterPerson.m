@@ -44,22 +44,27 @@
 
 
 
--(void)getImageForPersonWithBlock:(void (^)(NSError *))finishedBlock {
+-(void)getImageForPersonWithBlock:(void (^)(NSError *))finishedBlock
+{
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.profileImageURL]];
     AFHTTPRequestOperation *imageDownload = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     imageDownload.responseSerializer = [AFImageResponseSerializer serializer];
     
     NSOperationQueue *imageDownLoadQueue = [[NSOperationQueue alloc]init];
-    [imageDownload setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    [imageDownload setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^
+        {
             self.profileImage = responseObject;
             finishedBlock(nil);
         }];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-        finishedBlock(error);
-    }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+        {
+            UIImage *defaultImage = [UIImage imageNamed:@"default_profile_5_bigger"];
+            self.profileImage = defaultImage;
+            finishedBlock(error);
+        }];
     
     [imageDownLoadQueue addOperation:imageDownload];
 }
