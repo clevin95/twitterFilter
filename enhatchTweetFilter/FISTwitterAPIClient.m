@@ -10,56 +10,7 @@
 #import "FISConstants.h"
 #import "FISOAuthClient.h"
 
-
 @implementation FISTwitterAPIClient
-
-
-//+ (void)getOAuthWithBlock:(void (^)(NSString *oAuthToken, NSString *oAuthSecret, NSError *error))oAuthBlock
-//{
-//    LVTwitterOAuthClient * client = [[LVTwitterOAuthClient alloc] initWithConsumerKey:CLIENT_KEY andConsumerSecret:CLIENT_SECRET];
-//    
-//    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-//    ACAccountType *twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-//    NSArray *twitterAccounts = [accountStore accountsWithAccountType:twitterAccountType];
-//    if ([twitterAccounts count]>0)
-//    {
-//        
-//    [accountStore requestAccessToAccountsWithType:twitterAccountType options:NULL completion:^(BOOL granted, NSError *error)
-//     {
-//         if (granted)
-//         {
-//             ACAccount *twitterAccount = [twitterAccounts firstObject];
-//             
-//             [client requestTokensForAccount:twitterAccount completionBlock:^(NSDictionary *oAuthResponse, NSError *error)
-//              {
-//                  if (!error)
-//                  {
-//                      NSString *oAuthToken = [oAuthResponse objectForKey: kLVOAuthAccessTokenKey];
-//                      NSString *oAuthSecret = [oAuthResponse objectForKey: kLVOAuthTokenSecretKey];
-//                      oAuthBlock(oAuthToken,oAuthSecret,error);
-//                  }
-//                  else
-//                  {
-//                      NSError *customError = [[NSError alloc]initWithDomain:@"Could Not Verify Account" code:300 userInfo:nil];
-//                      oAuthBlock(nil,nil,customError);
-//                  }
-//              }];
-//         }
-//         else
-//         {
-//             NSError *customError = [[NSError alloc]initWithDomain:@"Access Denied By User" code:300 userInfo:nil];
-//             oAuthBlock(nil,nil,customError);
-//         }
-//     }];
-//    }
-//}
-
-
-
-
-
-
-
 
 + (void)createTwitterAccountWithTwitterAccount:(STTwitterAPI*)twitterAPI CompletionBlock:(void (^)(STTwitterAPI *aPITwitterAccount,NSError *error))accountBlock
 {
@@ -80,6 +31,7 @@
              {
                  twitterAPIBlock.userName = bearerToken;
                  accountBlock(twitterAPIBlock,nil);
+                 
              } errorBlock:^(NSError *error)
              {
                  NSError *customError = [[NSError alloc]initWithDomain:@"Could Not Verify Credentials" code:300 userInfo:nil];
@@ -130,25 +82,4 @@
     }];
 }
 
-+(ACAccount*)localTwitterAccounts
-{
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    NSArray *twitterAccounts = [accountStore accountsWithAccountType:twitterAccountType];
-    if ([twitterAccounts count]>0)
-    {
-        return twitterAccounts[0];
-    }
-    else return nil;
-}
-
-+(void)requestLocalAccountAccess:(ACAccount*)account
-{
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    
-    [accountStore requestAccessToAccountsWithType:account.accountType options:nil completion:^(BOOL granted, NSError *error)
-    {
-        
-    }];
-}
 @end

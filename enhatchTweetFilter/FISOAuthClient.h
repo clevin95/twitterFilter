@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <LVTwitterOAuthClient.h>
-#import <Accounts/Accounts.h>
 
 @interface FISOAuthClient : NSObject
 

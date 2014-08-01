@@ -9,8 +9,6 @@
 #import "FISTwitterPerson.h"
 #import <Foundation/Foundation.h>
 #import <STTwitter.h>
-#import <LVTwitterOAuthClient.h>
-#import <Accounts/Accounts.h>
 
 @interface FISTwitterAPIClient : NSObject
 
