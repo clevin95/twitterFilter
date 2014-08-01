@@ -10,4 +10,7 @@
 
 @interface FISConstants : NSObject
 
+extern NSString *const CLIENT_SECRET;
+extern NSString *const CLIENT_KEY;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "FISTwitterAPIClient.h"
+#import "FISConstants.h"
 
 
 @implementation FISTwitterAPIClient
@@ -14,8 +15,7 @@
 
 + (void)getOAuthWithBlock:(void (^)(NSString *oAuthToken, NSString *oAuthSecret, NSError *error))oAuthBlock
 {
-    
-    LVTwitterOAuthClient * client = [[LVTwitterOAuthClient alloc] initWithConsumerKey:@"EeaSWvnrfBW18u06DPi4Fmhgq" andConsumerSecret:@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb"];
+    LVTwitterOAuthClient * client = [[LVTwitterOAuthClient alloc] initWithConsumerKey:CLIENT_KEY andConsumerSecret:CLIENT_SECRET];
     
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
@@ -53,6 +53,13 @@
     }
 }
 
+
+
+
+
+
+
+
 + (void)createTwitterAccountWithTwitterAccount:(STTwitterAPI*)twitterAPI CompletionBlock:(void (^)(STTwitterAPI *aPITwitterAccount,NSError *error))accountBlock
 {
     __block STTwitterAPI *twitterAPIBlock = twitterAPI;
@@ -64,8 +71,8 @@
         }
         else
         {
-            twitterAPIBlock = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@"EeaSWvnrfBW18u06DPi4Fmhgq"
-                                                            consumerSecret:@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb"
+            twitterAPIBlock = [STTwitterAPI twitterAPIWithOAuthConsumerKey:CLIENT_KEY
+                                                            consumerSecret:CLIENT_SECRET
                                                                 oauthToken:oAuthToken oauthTokenSecret:oAuthSecret];
             
             [twitterAPIBlock verifyCredentialsWithSuccessBlock:^(NSString *bearerToken)

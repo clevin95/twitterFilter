@@ -114,6 +114,18 @@
     return cell;
 }
 
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSInteger lettersPerRow = 42;
+//    NSInteger baseline = 80;
+//    FISTweet *tweetToShow = self.store.tweetsToShow[indexPath.row];
+//    NSInteger tweetrows = ([tweetToShow.content length]/42)+1;
+//    NSInteger height = tweetrows*10 + baseline;
+//    
+//    
+//    return ;
+//}
+
 - (IBAction)refreshTapped:(id)sender {
     
     [self.store updateTweetsToShow:^(NSError *error)
