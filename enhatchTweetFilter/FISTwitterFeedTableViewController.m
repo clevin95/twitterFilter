@@ -169,7 +169,12 @@
         };
     
     };
-    [tweetsAlertView show];
+    
+    NSOperationQueue *mainQ = [NSOperationQueue mainQueue];
+    [mainQ addOperationWithBlock:^{
+        [tweetsAlertView show];
+    }];
+    
 }
 
 @end

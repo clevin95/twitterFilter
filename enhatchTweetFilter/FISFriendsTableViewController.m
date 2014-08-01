@@ -124,7 +124,12 @@
         };
         
     };
-    [friendsAlertView show];
+    
+    NSOperationQueue *mainQ = [NSOperationQueue mainQueue];
+    [mainQ addOperationWithBlock:^{
+        [friendsAlertView show];
+    }];
+    
 }
 
 /*
