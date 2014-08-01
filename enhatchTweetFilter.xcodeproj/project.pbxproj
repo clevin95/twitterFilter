@@ -44,6 +44,8 @@
 		6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */; };
 		7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */; };
 		7111EBAD198BB49F00DEDCA2 /* default_profile_5_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 7111EBAC198BB49F00DEDCA2 /* default_profile_5_bigger.png */; };
+		71A59A91198BE4B000B4D872 /* FISLocalAccountClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A59A90198BE4B000B4D872 /* FISLocalAccountClient.m */; };
+		71A59A96198BEB1C00B4D872 /* FISOAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +118,10 @@
 		7111EBA9198BACCD00DEDCA2 /* FISAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISAlertView.h; sourceTree = "<group>"; };
 		7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISAlertView.m; sourceTree = "<group>"; };
 		7111EBAC198BB49F00DEDCA2 /* default_profile_5_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_profile_5_bigger.png; path = ../../../../Desktop/default_profile_5_bigger.png; sourceTree = "<group>"; };
+		71A59A8F198BE4B000B4D872 /* FISLocalAccountClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISLocalAccountClient.h; sourceTree = "<group>"; };
+		71A59A90198BE4B000B4D872 /* FISLocalAccountClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISLocalAccountClient.m; sourceTree = "<group>"; };
+		71A59A94198BEB1C00B4D872 /* FISOAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISOAuthClient.h; sourceTree = "<group>"; };
+		71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISOAuthClient.m; sourceTree = "<group>"; };
 		8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AB93FF33ED413685BFEEEA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -261,6 +267,10 @@
 				6FA5EADD1987E6EB00AECF7C /* FISDataStore.m */,
 				6FA5EAD91987E2F700AECF7C /* FISTwitterAPIClient.h */,
 				6FA5EADA1987E2F700AECF7C /* FISTwitterAPIClient.m */,
+				71A59A94198BEB1C00B4D872 /* FISOAuthClient.h */,
+				71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */,
+				71A59A8F198BE4B000B4D872 /* FISLocalAccountClient.h */,
+				71A59A90198BE4B000B4D872 /* FISLocalAccountClient.m */,
 				6FD062B7198A84BE007FD3AA /* FISPreferenceAlgorithm.h */,
 				6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */,
 				7111EBA9198BACCD00DEDCA2 /* FISAlertView.h */,
@@ -422,6 +432,7 @@
 			files = (
 				7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */,
 				6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */,
+				71A59A91198BE4B000B4D872 /* FISLocalAccountClient.m in Sources */,
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,
@@ -432,6 +443,7 @@
 				6FA5EADB1987E2F700AECF7C /* FISTwitterAPIClient.m in Sources */,
 				6FD062AA198A7914007FD3AA /* Model.xcdatamodeld in Sources */,
 				6FA5EAD81987DD8600AECF7C /* FISTwitterFeedTableViewController.m in Sources */,
+				71A59A96198BEB1C00B4D872 /* FISOAuthClient.m in Sources */,
 				6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */,
 				6F0412F719898D3C002CC2E7 /* FISFriendFeedTableViewController.m in Sources */,
 				6F0412F419897C2C002CC2E7 /* FISFriendTableViewCell.m in Sources */,
