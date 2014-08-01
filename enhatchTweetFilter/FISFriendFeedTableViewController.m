@@ -11,6 +11,7 @@
 #import "FISSlidableTableViewCell.h"
 #import "FISTweet.h"
 #import "FISAlertView.h"
+#import "FISTrashBinTableViewController.h"
 
 
 @interface FISFriendFeedTableViewController () <CellSliderDelegate>
@@ -33,6 +34,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.layer.shadowRadius = 4;
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+    self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.navigationBar.bounds];
+    self.navigationController.navigationBar.layer.shadowPath = path.CGPath;
+    
     self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
@@ -40,6 +49,28 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+- (void)setUpNavigationBar {
+    UIToolbar *rightToolbarView = [[UIToolbar alloc]init];
+    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashTapped)];
+    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(reloadTapped)];
+    [rightToolbarView add
+    
+    UIBarButtonItem* barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:viewContainer];
+    
+    // Set the navigation bar's right button item
+    self.navigationItem.rightBarButtonItem = barBtnItem;
+}
+
+- (void)trashTapped {
+    
+}
+
+
+- (void)reloadTapped {
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -73,6 +104,10 @@
     return [self.currentFriend.tweets count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 110;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -96,18 +131,27 @@
         }];
     }
     cell.profileImageView.image = self.currentFriend.profileImage;
+    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundView.backgroundColor = [UIColor clearColor];
+    
     return cell;
 }
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
+    FISTweet *tweetSwiped = self.currentFriend.tweets[[self.tableView indexPathForCell:cell].row];
+    tweetSwiped.swipedPositive = NO;
+    [self.currentFriend.personalTrash addObject:tweetSwiped];
     [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:NO];
-    [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    [self.currentFriend.tweets removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
+    FISTweet *tweetSwiped = self.currentFriend.tweets[[self.tableView indexPathForCell:cell].row];
+    tweetSwiped.swipedPositive = YES;
+    [self.currentFriend.personalTrash addObject:tweetSwiped];
     [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:YES];
-    [self.currentFriend.tweets removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    [self.currentFriend.tweets removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -139,6 +183,16 @@
         [tweetsAlertView show];
     }];
     
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    
+    if ([segue.destinationViewController isKindOfClass:[FISTrashBinTableViewController class]]){
+        FISTrashBinTableViewController *trashController = segue.destinationViewController;
+        trashController.trashItems = self.currentFriend.personalTrash;
+    }
 }
 
 /*

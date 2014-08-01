@@ -33,6 +33,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.layer.shadowRadius = 4;
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+    self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.navigationBar.bounds];
+    self.navigationController.navigationBar.layer.shadowPath = path.CGPath;
+    
+    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.store = [FISDataStore sharedDataStore];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadFriends) name:@"finishedCreatingUser" object:nil];
@@ -73,6 +83,12 @@
 {
     // Return the number of rows in the section.
     return [self.store.friendsArray count];
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
 }
 
 
@@ -131,6 +147,34 @@
     }];
     
 }
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc]init];
+    [view setAlpha:0.0f];
+    return view;
+}
+
+//Creates a Header for the first tableView cell
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 5;
+}
+
+//Makes the header transparent
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc]init];
+    [view setAlpha:0.0f];
+    
+    return view;
+}
+
 
 /*
 // Override to support conditional editing of the table view.

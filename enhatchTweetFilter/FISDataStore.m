@@ -33,6 +33,13 @@
     return _scoreArray;
 }
 
+-(NSMutableArray *)globalTrash {
+    if (!_globalTrash){
+        _globalTrash = [[NSMutableArray alloc]init];
+    }
+    return _globalTrash;
+}
+
 
 -(VectorSet *)gloabalVectors{
     if (!_gloabalVectors){

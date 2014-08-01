@@ -14,6 +14,7 @@
 #import "FISTwitterPerson.h"
 #import "FISPreferenceAlgorithm.h"
 #import "FISAlertView.h"
+#import "FISTrashBinTableViewController.h"
 
 @interface FISTwitterFeedTableViewController () <CellSliderDelegate>
 
@@ -39,6 +40,12 @@
 {
     [super viewDidLoad];
 
+    self.navigationController.navigationBar.layer.shadowRadius = 4;
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+    self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.navigationBar.bounds];
+    self.navigationController.navigationBar.layer.shadowPath = path.CGPath;
     self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -89,6 +96,7 @@
 }
 
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"TweetCell";
@@ -111,6 +119,12 @@
     cell.scoreLabel.text = [NSString stringWithFormat:@"%f",tweetToShow.score];
     cell.screenNameLabel.text = [@"@" stringByAppendingString:tweeter.screenName];
     cell.delegate = self;
+    
+    
+    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundView.backgroundColor = [UIColor clearColor];
+    
+    
     return cell;
 }
 
@@ -126,6 +140,11 @@
 //    return ;
 //}
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 110;
+}
+
 - (IBAction)refreshTapped:(id)sender {
     
     [self.store updateTweetsToShow:^(NSError *error)
@@ -140,24 +159,28 @@
 
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
-    
-    
-    
     [self.store addTweet:cell.contentField.text forVectorSet:self.store.gloabalVectors toPositive:NO];
     
-    [self.store.tweetsToShow removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
-    //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    NSInteger cellIndex = [self.tableView indexPathForCell:cell].row;
+    FISTweet *tweetSwiped = self.store.tweetsToShow[cellIndex];
+    tweetSwiped.swipedPositive = NO;
+    [self.store.globalTrash addObject:tweetSwiped];
+    [self.store.tweetsToShow removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
     [self.store addTweet:cell.contentField.text forVectorSet:self.store.gloabalVectors toPositive:YES];
+    NSInteger cellIndex = [self.tableView indexPathForCell:cell].row;
+    FISTweet *tweetSwiped = self.store.tweetsToShow[cellIndex];
+    tweetSwiped.swipedPositive = NO;
     
-    
-    [self.store.tweetsToShow removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
+    [self.store.globalTrash addObject:tweetSwiped];
+    [self.store.tweetsToShow removeObject:tweetSwiped];
     //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
+
 
 -(void)displayAlertWithError:(NSError*)error
 {
@@ -187,6 +210,13 @@
         [tweetsAlertView show];
     }];
     
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.destinationViewController isKindOfClass:[FISTrashBinTableViewController class]]){
+        FISTrashBinTableViewController *trashController = segue.destinationViewController;
+        trashController.trashItems = self.store.globalTrash;
+    }
 }
 
 @end

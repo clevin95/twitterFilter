@@ -15,6 +15,8 @@
 		6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */; };
 		6F70B14D19893E3500AE67FF /* FISTwitterPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14C19893E3500AE67FF /* FISTwitterPerson.m */; };
 		6F70B1501989470700AE67FF /* FISSlidableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B14F1989470700AE67FF /* FISSlidableTableViewCell.m */; };
+		6F80C341198C0E100051CDD3 /* default_profile_5_bigger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6F80C340198C0E100051CDD3 /* default_profile_5_bigger.jpg */; };
+		6F80C344198C16DD0051CDD3 /* FISTrashBinTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F80C343198C16DD0051CDD3 /* FISTrashBinTableViewController.m */; };
 		6FA5EA9F1987DC4300AECF7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EA9E1987DC4300AECF7C /* Foundation.framework */; };
 		6FA5EAA11987DC4300AECF7C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EAA01987DC4300AECF7C /* CoreGraphics.framework */; };
 		6FA5EAA31987DC4300AECF7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA5EAA21987DC4300AECF7C /* UIKit.framework */; };
@@ -43,8 +45,6 @@
 		6FD062BF198AB9B3007FD3AA /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062BE198AB9B3007FD3AA /* Vector.m */; };
 		6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */; };
 		7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */; };
-		7111EBAD198BB49F00DEDCA2 /* default_profile_5_bigger.png in Resources */ = {isa = PBXBuildFile; fileRef = 7111EBAC198BB49F00DEDCA2 /* default_profile_5_bigger.png */; };
-		71A59A91198BE4B000B4D872 /* FISLocalAccountClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A59A90198BE4B000B4D872 /* FISLocalAccountClient.m */; };
 		71A59A96198BEB1C00B4D872 /* FISOAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +73,9 @@
 		6F70B14C19893E3500AE67FF /* FISTwitterPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISTwitterPerson.m; sourceTree = "<group>"; };
 		6F70B14E1989470700AE67FF /* FISSlidableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISSlidableTableViewCell.h; sourceTree = "<group>"; };
 		6F70B14F1989470700AE67FF /* FISSlidableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISSlidableTableViewCell.m; sourceTree = "<group>"; };
+		6F80C340198C0E100051CDD3 /* default_profile_5_bigger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = default_profile_5_bigger.jpg; path = enhatchTweetFilterTests/default_profile_5_bigger.jpg; sourceTree = SOURCE_ROOT; };
+		6F80C342198C16DD0051CDD3 /* FISTrashBinTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISTrashBinTableViewController.h; sourceTree = "<group>"; };
+		6F80C343198C16DD0051CDD3 /* FISTrashBinTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISTrashBinTableViewController.m; sourceTree = "<group>"; };
 		6FA5EA9B1987DC4300AECF7C /* enhatchTweetFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = enhatchTweetFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FA5EA9E1987DC4300AECF7C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6FA5EAA01987DC4300AECF7C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -117,9 +120,6 @@
 		6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnhatchFullImage.png; sourceTree = "<group>"; };
 		7111EBA9198BACCD00DEDCA2 /* FISAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISAlertView.h; sourceTree = "<group>"; };
 		7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISAlertView.m; sourceTree = "<group>"; };
-		7111EBAC198BB49F00DEDCA2 /* default_profile_5_bigger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_profile_5_bigger.png; path = ../../../../Desktop/default_profile_5_bigger.png; sourceTree = "<group>"; };
-		71A59A8F198BE4B000B4D872 /* FISLocalAccountClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISLocalAccountClient.h; sourceTree = "<group>"; };
-		71A59A90198BE4B000B4D872 /* FISLocalAccountClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISLocalAccountClient.m; sourceTree = "<group>"; };
 		71A59A94198BEB1C00B4D872 /* FISOAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISOAuthClient.h; sourceTree = "<group>"; };
 		71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISOAuthClient.m; sourceTree = "<group>"; };
 		8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,7 +215,7 @@
 		6FA5EAA51987DC4300AECF7C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7111EBAC198BB49F00DEDCA2 /* default_profile_5_bigger.png */,
+				6F80C340198C0E100051CDD3 /* default_profile_5_bigger.jpg */,
 				6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */,
 				6FA5EADF1987E8E100AECF7C /* FISCompareSentences.h */,
 				6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */,
@@ -269,8 +269,6 @@
 				6FA5EADA1987E2F700AECF7C /* FISTwitterAPIClient.m */,
 				71A59A94198BEB1C00B4D872 /* FISOAuthClient.h */,
 				71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */,
-				71A59A8F198BE4B000B4D872 /* FISLocalAccountClient.h */,
-				71A59A90198BE4B000B4D872 /* FISLocalAccountClient.m */,
 				6FD062B7198A84BE007FD3AA /* FISPreferenceAlgorithm.h */,
 				6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */,
 				7111EBA9198BACCD00DEDCA2 /* FISAlertView.h */,
@@ -282,6 +280,8 @@
 		6FA5EAE61988287D00AECF7C /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6F80C342198C16DD0051CDD3 /* FISTrashBinTableViewController.h */,
+				6F80C343198C16DD0051CDD3 /* FISTrashBinTableViewController.m */,
 				6F70B1451989376200AE67FF /* FISSegmentedViewController.h */,
 				6F70B1461989376200AE67FF /* FISSegmentedViewController.m */,
 				6FA5EAD61987DD8600AECF7C /* FISTwitterFeedTableViewController.h */,
@@ -374,7 +374,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FA5EAB51987DC4300AECF7C /* Main_iPad.storyboard in Resources */,
-				7111EBAD198BB49F00DEDCA2 /* default_profile_5_bigger.png in Resources */,
 				6FA5EABA1987DC4300AECF7C /* Images.xcassets in Resources */,
 				6FA5EAB21987DC4300AECF7C /* Main_iPhone.storyboard in Resources */,
 				6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */,
@@ -387,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FA5EACB1987DC4300AECF7C /* InfoPlist.strings in Resources */,
+				6F80C341198C0E100051CDD3 /* default_profile_5_bigger.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,11 +432,11 @@
 			files = (
 				7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */,
 				6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */,
-				71A59A91198BE4B000B4D872 /* FISLocalAccountClient.m in Sources */,
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,
 				6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */,
+				6F80C344198C16DD0051CDD3 /* FISTrashBinTableViewController.m in Sources */,
 				6F70B1471989376200AE67FF /* FISSegmentedViewController.m in Sources */,
 				6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */,
 				6FD062B6198A7CA9007FD3AA /* Word.m in Sources */,

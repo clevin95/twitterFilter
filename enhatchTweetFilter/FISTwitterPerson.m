@@ -21,6 +21,14 @@
 }
 
 
+-(NSMutableArray *)personalTrash {
+    if (!_personalTrash){
+        _personalTrash = [[NSMutableArray alloc]init];
+    }
+    return _personalTrash;
+}
+
+
 
 -(VectorSet *)personalVectors{
     
@@ -61,7 +69,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
         {
-            UIImage *defaultImage = [UIImage imageNamed:@"default_profile_5_bigger"];
+            UIImage *defaultImage = [UIImage imageNamed:@"default_profile_5_bigger.jpg"];
             self.profileImage = defaultImage;
             finishedBlock(error);
         }];

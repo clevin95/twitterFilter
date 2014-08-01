@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSMutableArray *negativeVectors;
 @property (strong, nonatomic) VectorSet *personalVectors;
 
+@property (strong, nonatomic) NSMutableArray *personalTrash;
+
 - (void) getImageForPersonWithBlock:(void (^)(NSError *error))finishedBlock;
 
 @end

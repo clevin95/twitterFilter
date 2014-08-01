@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *scoreArray;
 @property (strong, nonatomic) NSMutableArray *filteredArray;
 @property (strong, nonatomic) NSArray *friendsArray;
+@property (strong, nonatomic) NSMutableArray *globalTrash;
 
 @property (strong, nonatomic) STTwitterAPI *twitterAccount;
 @property (nonatomic) BOOL credentialAuthorized;
