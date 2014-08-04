@@ -46,6 +46,7 @@
 		6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */; };
 		7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */; };
 		71A59A96198BEB1C00B4D872 /* FISOAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */; };
+		71CF3C30199005150074F01F /* FISWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71CF3C2F199005150074F01F /* FISWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,8 @@
 		7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISAlertView.m; sourceTree = "<group>"; };
 		71A59A94198BEB1C00B4D872 /* FISOAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISOAuthClient.h; sourceTree = "<group>"; };
 		71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISOAuthClient.m; sourceTree = "<group>"; };
+		71CF3C2E199005150074F01F /* FISWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISWebViewController.h; sourceTree = "<group>"; };
+		71CF3C2F199005150074F01F /* FISWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISWebViewController.m; sourceTree = "<group>"; };
 		8EF7FC9D3BFB4E8E95EDA8F9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AB93FF33ED413685BFEEEA /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +293,8 @@
 				6F70B14919893A6600AE67FF /* FISFriendsTableViewController.m */,
 				6F0412F519898D3C002CC2E7 /* FISFriendFeedTableViewController.h */,
 				6F0412F619898D3C002CC2E7 /* FISFriendFeedTableViewController.m */,
+				71CF3C2E199005150074F01F /* FISWebViewController.h */,
+				71CF3C2F199005150074F01F /* FISWebViewController.m */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			files = (
 				7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */,
 				6F70B14A19893A6600AE67FF /* FISFriendsTableViewController.m in Sources */,
+				71CF3C30199005150074F01F /* FISWebViewController.m in Sources */,
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,

@@ -15,4 +15,6 @@
 @property (strong, nonatomic) FISTwitterPerson *tweeter;
 @property (nonatomic) CGFloat score;
 @property (nonatomic) BOOL swipedPositive;
+@property (strong, nonatomic) NSString *tweetID;
+
 @end
