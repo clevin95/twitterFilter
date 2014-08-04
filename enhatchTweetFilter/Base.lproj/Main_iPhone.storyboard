@@ -62,7 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mpN-ok-99u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-96" y="1008"/>
+            <point key="canvasLocation" x="-248" y="1016"/>
         </scene>
         <!--Twitter Feed Table View Controller-->
         <scene sceneID="Zhu-3s-lcK">
@@ -103,31 +103,29 @@
                                 </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="GPj-ln-7fY">
-                            <connections>
-                                <segue destination="8ae-9l-dIr" kind="modal" id="7nX-j6-iFY"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="8ae-9l-dIr" kind="modal" identifier="toTrash" id="wYe-Wh-9O4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tG-EL-f5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="657"/>
+            <point key="canvasLocation" x="1143" y="541"/>
         </scene>
         <!--Trash Bin Table View Controller-->
         <scene sceneID="LPS-zm-Trm">
             <objects>
                 <tableViewController id="Ta2-ZP-oJR" customClass="FISTrashBinTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="144" sectionHeaderHeight="22" sectionFooterHeight="22" id="0t4-QX-BMZ">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="22" sectionFooterHeight="22" id="0t4-QX-BMZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="144" id="w5l-iK-icP" customClass="FISSlidableTableViewCell">
-                                <rect key="frame" x="0.0" y="66" width="320" height="144"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trashBinCell" rowHeight="110" id="w5l-iK-icP" customClass="FISSlidableTableViewCell">
+                                <rect key="frame" x="0.0" y="66" width="320" height="110"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w5l-iK-icP" id="irw-Xv-U9s">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="143"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="109"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -143,16 +141,19 @@
                                 <rect key="frame" x="16" y="5" width="71" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Return">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="dismissButtonTapped:" destination="Ta2-ZP-oJR" eventType="touchUpInside" id="44h-XB-mph"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Aq-A8-l7k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2890" y="1046"/>
+            <point key="canvasLocation" x="2402" y="1016"/>
         </scene>
         <!--Friends Table View Controller-->
         <scene sceneID="qSg-jz-uw8">
@@ -203,7 +204,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQi-4l-s8m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="1471"/>
+            <point key="canvasLocation" x="759" y="1471"/>
         </scene>
         <!--Friend Feed Table View Controller-->
         <scene sceneID="Qy7-cC-WEO">
@@ -228,17 +229,14 @@
                             <outlet property="delegate" destination="BKp-Kq-BSb" id="ELe-mi-l57"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="bjn-1y-FYB">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="zOH-aP-JQ3">
-                            <connections>
-                                <segue destination="8ae-9l-dIr" kind="modal" id="XGx-CW-SZt"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="bjn-1y-FYB"/>
+                    <connections>
+                        <segue destination="8ae-9l-dIr" kind="modal" identifier="toTrash" id="Aj1-1u-37B"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaq-8z-saP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1684" y="1471"/>
+            <point key="canvasLocation" x="1212" y="1471"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yxX-1j-N77">
@@ -256,7 +254,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eaB-2O-rSR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="437" y="1471"/>
+            <point key="canvasLocation" x="269" y="1471"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="24T-XI-Cul">
@@ -274,12 +272,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G0z-aw-ZQQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="657"/>
+            <point key="canvasLocation" x="437" y="541"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wrg-fI-JYE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8ae-9l-dIr" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="trashNavController" storyboardIdentifier="trashNavController" automaticallyAdjustsScrollViewInsets="NO" id="8ae-9l-dIr" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rq9-Di-oud">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -292,7 +290,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lgy-Yc-thm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2392" y="1046"/>
+            <point key="canvasLocation" x="1912" y="1016"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -301,6 +299,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="XGx-CW-SZt"/>
+        <segue reference="Aj1-1u-37B"/>
     </inferredMetricsTieBreakers>
 </document>

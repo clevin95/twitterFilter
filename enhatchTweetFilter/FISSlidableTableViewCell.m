@@ -71,6 +71,13 @@
 
 
 - (void)createContentSubviews {
+    
+    //View for debugging
+    self.scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-100, 0, 100, 50)];
+    [self.tweetContentView addSubview:self.scoreLabel];
+    
+    
+    
     CGFloat imageWidth = 50;
     CGFloat buffer = 10;
     CGRect nameLabelRect = CGRectMake(imageWidth + buffer * 2, buffer, self.frame.size.width - imageWidth - 50, 20);

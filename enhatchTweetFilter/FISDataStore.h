@@ -37,6 +37,8 @@
 - (void) updateFriendsToShow:(void (^)(NSError *error))callback;
 - (void) createTwitterAccount:(void (^)(NSError *error))callback;
 - (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(NSError *error))callback;
+- (NSMutableArray *)scoreAndSortArray:(NSMutableArray *)tweetArray forVectorSet:(VectorSet *)vectorSet;
+- (NSMutableArray *)reorderTweetArray:(NSMutableArray *)tweetArray;
 
 @end
 

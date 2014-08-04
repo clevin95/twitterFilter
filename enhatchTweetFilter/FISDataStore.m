@@ -136,8 +136,6 @@
         tweeter.screenName = tweetDictionary[@"user"][@"screen_name"];
         tweeter.profileImageURL = tweetDictionary[@"user"][@"profile_image_url"];
         NSString *tweetText = [NSString stringWithFormat:@"%@",tweetDictionary[@"text"]];
-        
-
         NSArray *dislikedVectors = nil;
         NSArray *likedVectors = nil;
         if (!person){
@@ -148,8 +146,6 @@
             dislikedVectors = [person.personalVectors.negativeVectors allObjects];
             likedVectors = [person.personalVectors.positiveVectors allObjects];
         }
-        
-        
         CGFloat negativeScore = [FISPreferenceAlgorithm compareSentence:tweetText withVectorSet:dislikedVectors];
         CGFloat positiveScore = (1.57 - [FISPreferenceAlgorithm compareSentence:tweetText withVectorSet:likedVectors]);
         loadedTweet.score = positiveScore + negativeScore;
@@ -157,7 +153,7 @@
         loadedTweet.content = tweetText;
         [tweetsArray  insertObject:loadedTweet atIndex:0];
     }
-    return tweetsArray;
+    return [self reorderTweetArray:tweetsArray];
 }
 
 - (void) createTwitterAccount:(void (^)(NSError*))callback
@@ -286,6 +282,39 @@
     [self.managedObjectContext insertObject:newObject];
     [self.managedObjectContext deleteObject:currentObject];
     [self save];
+}
+
+- (NSMutableArray *)scoreAndSortArray:(NSMutableArray *)tweetArray forVectorSet:(VectorSet *)vectorSet {
+    NSArray *dislikedVectors = [vectorSet.negativeVectors allObjects];
+    NSArray *likedVectors = [vectorSet.positiveVectors allObjects];
+    for (FISTweet *tweet in tweetArray){
+        CGFloat negativeScore = [FISPreferenceAlgorithm compareSentence:tweet.content withVectorSet:dislikedVectors];
+        CGFloat positiveScore = 1.57 - [FISPreferenceAlgorithm compareSentence:tweet.content withVectorSet:likedVectors];
+        tweet.score = negativeScore + positiveScore;
+    }
+    
+    NSMutableArray *reorderedArray = [self reorderTweetArray:tweetArray];
+    
+    
+    return reorderedArray;
+}
+
+- (NSMutableArray *)reorderTweetArray:(NSMutableArray *)tweetArray {
+    NSSortDescriptor *scoreSorter = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
+    
+    NSMutableArray * sortedTweets = [[NSMutableArray alloc] initWithArray:[tweetArray sortedArrayUsingDescriptors:@[scoreSorter]]];
+    
+    if ([sortedTweets isEqualToArray:tweetArray]){
+        NSLog(@"equal");
+        
+    }else {
+        
+        
+        NSLog(@"uequal");
+    }
+    
+    
+    return sortedTweets;
 }
 
 @end

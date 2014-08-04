@@ -39,7 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    [self setUpNavigationBar];
     self.navigationController.navigationBar.layer.shadowRadius = 4;
     self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
     self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
@@ -63,6 +63,50 @@
     self.store.tweetsToShow =[[NSMutableArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadTweets) name:@"finishedCreatingUser" object:nil];
 }
+
+- (void)setUpNavigationBar {
+    UIToolbar *rightToolbarView = [[UIToolbar alloc]  initWithFrame:CGRectMake(0, 0, 70, 40)];
+    
+    [rightToolbarView setBackgroundImage:[UIImage new]
+                      forToolbarPosition:UIToolbarPositionAny
+                              barMetrics:UIBarMetricsDefault];
+    
+    [rightToolbarView setBackgroundColor:[UIColor clearColor]];
+    UIBarButtonItem *trashButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashTapped)];
+    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadTapped)];
+    rightToolbarView.layer.backgroundColor = [UIColor whiteColor].CGColor ;
+    rightToolbarView.items = @[trashButton, reloadButton];
+    UIBarButtonItem* barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:rightToolbarView];
+    // Set the navigation bar's right button item
+    self.navigationItem.rightBarButtonItem = barBtnItem;
+}
+
+- (void)trashTapped {
+    [self performSegueWithIdentifier:@"toTrash" sender:self];
+}
+
+- (void)reloadTapped {
+    [self.tableView beginUpdates];
+    
+    NSArray * unstoredTweetsToShow = [self.store.tweetsToShow copy];
+    self.store.tweetsToShow = [self.store scoreAndSortArray:self.store.tweetsToShow forVectorSet:self.store.gloabalVectors];
+    NSInteger sourceRow = 0;
+    for (FISTweet *tweet in unstoredTweetsToShow) {
+        NSInteger destRow = [self.store.tweetsToShow indexOfObject:tweet];
+        
+        if (destRow != sourceRow) {
+            // Move the rows within the table view
+            NSIndexPath *sourceIndexPath = [NSIndexPath indexPathForItem:sourceRow inSection:0];
+            NSIndexPath *destIndexPath = [NSIndexPath indexPathForItem:destRow inSection:0];
+            [self.tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destIndexPath];
+            
+        }
+        sourceRow++;
+    }
+    [self.tableView endUpdates];
+    //[self.tableView reloadData];
+}
+
 
 - (void)loadTweets
 {
@@ -213,8 +257,11 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.destinationViewController isKindOfClass:[FISTrashBinTableViewController class]]){
-        FISTrashBinTableViewController *trashController = segue.destinationViewController;
+    
+    
+    
+    if ( [((UIViewController *)segue.destinationViewController).restorationIdentifier isEqualToString:@"trashNavController"]){
+        FISTrashBinTableViewController *trashController = ((UIViewController *)segue.destinationViewController).childViewControllers[0] ;
         trashController.trashItems = self.store.globalTrash;
     }
 }
