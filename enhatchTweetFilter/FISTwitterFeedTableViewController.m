@@ -15,6 +15,8 @@
 #import "FISPreferenceAlgorithm.h"
 #import "FISAlertView.h"
 #import "FISTrashBinTableViewController.h"
+//lmr
+#import "FISWebViewController.h"
 
 @interface FISTwitterFeedTableViewController () <CellSliderDelegate>
 
@@ -172,17 +174,6 @@
     return cell;
 }
 
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NSInteger lettersPerRow = 42;
-//    NSInteger baseline = 80;
-//    FISTweet *tweetToShow = self.store.tweetsToShow[indexPath.row];
-//    NSInteger tweetrows = ([tweetToShow.content length]/42)+1;
-//    NSInteger height = tweetrows*10 + baseline;
-//    
-//    
-//    return ;
-//}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -264,6 +255,21 @@
         FISTrashBinTableViewController *trashController = ((UIViewController *)segue.destinationViewController).childViewControllers[0] ;
         trashController.trashItems = self.store.globalTrash;
     }
+    //lmr
+    else if ([segue.identifier isEqualToString:@"generalToDetail"])
+    {
+        FISSlidableTableViewCell *cell = sender;
+        NSIndexPath *index = [self.tableView indexPathForCell:cell];
+        //change to index.row
+        FISTweet *tweet = self.store.tweetsToShow[index.row];
+        FISWebViewController *nextVC = segue.destinationViewController;
+        nextVC.tweet = tweet;
+    }
+}
+//lmr
+-(void)cellTapped:(FISSlidableTableViewCell *) cell
+{
+    [self performSegueWithIdentifier:@"generalToDetail" sender:cell];
 }
 
 @end

@@ -7,11 +7,13 @@
 //
 
 #import "FISWebViewController.h"
+#import "FISTweet.h"
 
 @interface FISWebViewController ()
 
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+- (IBAction)twitterAppTapped:(id)sender;
 
 @end
 
@@ -29,14 +31,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   // NSURL *url = [NSURL URLWithString:@"https://twitter.com/OverheardAtFlat/status/496317230712647680"];
-   // NSURLRequest *tweet = [NSURLRequest requestWithURL:url];
-   // [self.webView loadRequest:tweet];
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter://status?id=496317230712647680"]];
+    FISTwitterPerson *tweeter = self.tweet.tweeter;
+    NSString *urlString = [NSString stringWithFormat:@"https://twitter.com/%@/status/%@",tweeter.screenName,self.tweet.tweetID];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *tweet = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:tweet];
     
+    //Right UIBarButton with Twitter logo and name
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(twitterAppTapped:)forControlEvents:UIControlEventTouchUpInside];
+    [button setFrame:CGRectMake(0, 0, 40, 18)];
     
-    // Do any additional setup after loading the view.
+    UIImage *image = [UIImage imageNamed:@"TwitterLogoBlueSmall2"];
+    [[button imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [button setImage:image forState:UIControlStateNormal];
+    button.imageEdgeInsets = UIEdgeInsetsMake(2, -15, 2, 0);
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+                                            
+    self.navigationItem.rightBarButtonItem = barButton;
+
+                                            
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,15 +60,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)twitterAppTapped:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSString *url = [NSString stringWithFormat:@"twitter://status?id=%@",self.tweet.tweetID];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    NSLog(@"test");
 }
-*/
-
 @end

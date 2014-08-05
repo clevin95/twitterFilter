@@ -14,6 +14,8 @@
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell;
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell;
+//added by lmr
+-(void) cellTapped:(FISSlidableTableViewCell *)cell;
 
 @end
 
@@ -28,6 +30,7 @@
 @property (nonatomic) BOOL hasRedBackground;
 @property (nonatomic) BOOL isDismissed;
 @property (weak, nonatomic) id <CellSliderDelegate> delegate;
+@property (strong, nonatomic) UIButton *twitterButton;
 
 
 

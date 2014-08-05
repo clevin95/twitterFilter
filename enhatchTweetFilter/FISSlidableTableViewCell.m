@@ -85,9 +85,10 @@
     CGRect contentFieldRect = CGRectMake(imageWidth + buffer * 2, userNameLabelRect.origin.y + userNameLabelRect.size.height, self.frame.size.width - imageWidth - 50, self.frame.size.height);
     CGRect profileImageRect = CGRectMake(buffer, buffer, imageWidth, imageWidth);
     
+    CGRect twitterImageRect = CGRectMake(imageWidth * 5 + buffer * 4.3, buffer, self.frame.size.width - imageWidth *6, buffer * 3);
+    
     self.nameLabel = [[UILabel alloc]initWithFrame:nameLabelRect];
     self.nameLabel.text = @"Test Name";
-    
     
     self.screenNameLabel = [[UILabel alloc]initWithFrame:userNameLabelRect];
     self.screenNameLabel.font = [UIFont systemFontOfSize:12];
@@ -101,13 +102,26 @@
     self.profileImageView.clipsToBounds = YES;
     self.profileImageView.layer.backgroundColor = [UIColor purpleColor].CGColor;
     
-    
+    self.twitterButton = [[UIButton alloc]initWithFrame:twitterImageRect];
+    [[self.twitterButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [self.twitterButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.twitterButton setImage:[UIImage imageNamed:@"TwitterLogoBlue"] forState:UIControlStateNormal];
+    self.twitterButton.backgroundColor = [UIColor clearColor];
     
     [self.tweetContentView addSubview:self.contentField];
     [self.tweetContentView addSubview:self.nameLabel];
     [self.tweetContentView addSubview:self.profileImageView];
     [self.tweetContentView addSubview:self.screenNameLabel];
+    [self.tweetContentView addSubview:self.twitterButton];
     self.hasRedBackground = YES;
+}
+
+
+
+
+//lmr
+-(IBAction)buttonTapped:(id)sender {
+    [self.delegate cellTapped:self];
 }
 
 

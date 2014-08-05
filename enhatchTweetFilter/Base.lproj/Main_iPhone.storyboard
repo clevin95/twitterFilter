@@ -98,14 +98,12 @@
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="MKF-Ll-xPU" kind="push" id="Eyg-cf-znH"/>
-                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="8ae-9l-dIr" kind="modal" identifier="toTrash" id="wYe-Wh-9O4"/>
+                        <segue destination="MKF-Ll-xPU" kind="push" identifier="generalToDetail" id="fv2-Wu-6k1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1tG-EL-f5v" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -125,7 +123,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XN3-Dc-GK3">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                                <rect key="frame" x="-5" y="0.0" width="325" height="524"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
@@ -133,7 +131,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="yqd-LV-ebl">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="J8K-6x-4j2"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="J8K-6x-4j2">
+                            <connections>
+                                <action selector="twitterAppTapped:" destination="MKF-Ll-xPU" id="ltU-28-Isa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="webView" destination="XN3-Dc-GK3" id="WRP-vm-yw3"/>
@@ -141,7 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdO-lG-Yxn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1719" y="253"/>
+            <point key="canvasLocation" x="1702" y="243"/>
         </scene>
         <!--Trash Bin Table View Controller-->
         <scene sceneID="LPS-zm-Trm">

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FISTweet;
 
 @interface FISWebViewController : UIViewController
+
+@property (strong, nonatomic) FISTweet *tweet;
 
 @end

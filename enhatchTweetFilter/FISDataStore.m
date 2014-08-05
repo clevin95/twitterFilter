@@ -136,6 +136,7 @@
         tweeter.screenName = tweetDictionary[@"user"][@"screen_name"];
         tweeter.profileImageURL = tweetDictionary[@"user"][@"profile_image_url"];
         NSString *tweetText = [NSString stringWithFormat:@"%@",tweetDictionary[@"text"]];
+        NSString *tweetID = tweetDictionary[@"id"];
         NSArray *dislikedVectors = nil;
         NSArray *likedVectors = nil;
         if (!person){
@@ -151,6 +152,7 @@
         loadedTweet.score = positiveScore + negativeScore;
         loadedTweet.tweeter = tweeter;
         loadedTweet.content = tweetText;
+        loadedTweet.tweetID = tweetID;
         [tweetsArray  insertObject:loadedTweet atIndex:0];
     }
     return [self reorderTweetArray:tweetsArray];

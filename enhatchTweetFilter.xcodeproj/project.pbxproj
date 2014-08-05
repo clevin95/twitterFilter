@@ -43,7 +43,6 @@
 		6FD062B9198A84BE007FD3AA /* FISPreferenceAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */; };
 		6FD062BC198AB9B2007FD3AA /* VectorSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062BB198AB9B2007FD3AA /* VectorSet.m */; };
 		6FD062BF198AB9B3007FD3AA /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062BE198AB9B3007FD3AA /* Vector.m */; };
-		6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */; };
 		7111EBAB198BACCD00DEDCA2 /* FISAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */; };
 		71A59A96198BEB1C00B4D872 /* FISOAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A59A95198BEB1C00B4D872 /* FISOAuthClient.m */; };
 		71CF3C30199005150074F01F /* FISWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71CF3C2F199005150074F01F /* FISWebViewController.m */; };
@@ -118,7 +117,6 @@
 		6FD062BB198AB9B2007FD3AA /* VectorSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorSet.m; sourceTree = "<group>"; };
 		6FD062BD198AB9B3007FD3AA /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		6FD062BE198AB9B3007FD3AA /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
-		6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnhatchFullImage.png; sourceTree = "<group>"; };
 		7111EBA9198BACCD00DEDCA2 /* FISAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISAlertView.h; sourceTree = "<group>"; };
 		7111EBAA198BACCD00DEDCA2 /* FISAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISAlertView.m; sourceTree = "<group>"; };
 		71A59A94198BEB1C00B4D872 /* FISOAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISOAuthClient.h; sourceTree = "<group>"; };
@@ -219,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				6F80C340198C0E100051CDD3 /* default_profile_5_bigger.jpg */,
-				6FD062C0198AFB84007FD3AA /* EnhatchFullImage.png */,
 				6FA5EADF1987E8E100AECF7C /* FISCompareSentences.h */,
 				6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */,
 				6FA5EAE21988205000AECF7C /* FISConstants.h */,
@@ -381,7 +378,6 @@
 				6FA5EAB51987DC4300AECF7C /* Main_iPad.storyboard in Resources */,
 				6FA5EABA1987DC4300AECF7C /* Images.xcassets in Resources */,
 				6FA5EAB21987DC4300AECF7C /* Main_iPhone.storyboard in Resources */,
-				6FD062C1198AFB84007FD3AA /* EnhatchFullImage.png in Resources */,
 				6FA5EAA91987DC4300AECF7C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
