@@ -14,7 +14,6 @@
 
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell;
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell;
-//added by lmr
 -(void) cellTapped:(FISSlidableTableViewCell *)cell;
 
 @end

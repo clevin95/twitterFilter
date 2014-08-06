@@ -12,6 +12,7 @@
 #import "FISTweet.h"
 #import "FISAlertView.h"
 #import "FISTrashBinTableViewController.h"
+#import "FISWebViewController.h"
 
 
 @interface FISFriendFeedTableViewController () <CellSliderDelegate>
@@ -221,6 +222,19 @@
         FISTrashBinTableViewController *trashController = ((UIViewController *)segue.destinationViewController).childViewControllers[0] ;
         trashController.trashItems = self.currentFriend.personalTrash;
     }
+    else if ([segue.identifier isEqualToString:@"generalToDetail"])
+    {
+        FISSlidableTableViewCell *cell = sender;
+        NSIndexPath *index = [self.tableView indexPathForCell:cell];
+        FISTweet *tweet = self.store.tweetsToShow[index.row];
+        FISWebViewController *nextVC = segue.destinationViewController;
+        nextVC.tweet = tweet;
+    }
+}
+
+-(void)cellTapped:(FISSlidableTableViewCell *) cell
+{
+    [self performSegueWithIdentifier:@"generalToDetail" sender:cell];
 }
 
 /*

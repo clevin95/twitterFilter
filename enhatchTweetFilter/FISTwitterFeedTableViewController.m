@@ -15,7 +15,6 @@
 #import "FISPreferenceAlgorithm.h"
 #import "FISAlertView.h"
 #import "FISTrashBinTableViewController.h"
-//lmr
 #import "FISWebViewController.h"
 
 @interface FISTwitterFeedTableViewController () <CellSliderDelegate>
@@ -255,7 +254,6 @@
         FISTrashBinTableViewController *trashController = ((UIViewController *)segue.destinationViewController).childViewControllers[0] ;
         trashController.trashItems = self.store.globalTrash;
     }
-    //lmr
     else if ([segue.identifier isEqualToString:@"generalToDetail"])
     {
         FISSlidableTableViewCell *cell = sender;
@@ -266,7 +264,7 @@
         nextVC.tweet = tweet;
     }
 }
-//lmr
+
 -(void)cellTapped:(FISSlidableTableViewCell *) cell
 {
     [self performSegueWithIdentifier:@"generalToDetail" sender:cell];

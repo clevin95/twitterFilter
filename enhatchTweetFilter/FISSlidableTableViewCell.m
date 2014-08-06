@@ -117,9 +117,6 @@
 }
 
 
-
-
-//lmr
 -(IBAction)buttonTapped:(id)sender {
     [self.delegate cellTapped:self];
 }

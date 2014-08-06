@@ -143,7 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdO-lG-Yxn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1702" y="243"/>
+            <point key="canvasLocation" x="1912" y="323"/>
         </scene>
         <!--Trash Bin Table View Controller-->
         <scene sceneID="LPS-zm-Trm">
@@ -265,6 +265,7 @@
                     <navigationItem key="navigationItem" id="bjn-1y-FYB"/>
                     <connections>
                         <segue destination="8ae-9l-dIr" kind="modal" identifier="toTrash" id="Aj1-1u-37B"/>
+                        <segue destination="MKF-Ll-xPU" kind="push" identifier="generalToDetail" id="Rxd-7C-zvY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaq-8z-saP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -332,6 +333,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="wYe-Wh-9O4"/>
+        <segue reference="Rxd-7C-zvY"/>
+        <segue reference="Aj1-1u-37B"/>
     </inferredMetricsTieBreakers>
 </document>
