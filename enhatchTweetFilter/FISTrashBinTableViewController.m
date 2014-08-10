@@ -122,7 +122,6 @@
     }
     cell.contentField.text = tweetToShow.content;
     cell.nameLabel.text = tweeter.name;
-    cell.scoreLabel.text = [NSString stringWithFormat:@"%f",tweetToShow.score];
     cell.screenNameLabel.text = [@"@" stringByAppendingString:tweeter.screenName];
     cell.delegate = self;
     
