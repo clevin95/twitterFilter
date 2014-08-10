@@ -8,14 +8,14 @@
 
 #import "FISTrashBinTableViewController.h"
 #import "FISSlidableTableViewCell.h"
-
+#import "FISDataStore.h"
 #import "FISTweet.h"
+#import "FISWebViewController.h"
 
 @interface FISTrashBinTableViewController () <CellSliderDelegate>
 
-
+@property (strong, nonatomic) FISDataStore *store;
 - (IBAction)dismissButtonTapped:(id)sender;
-
 
 @end
 
@@ -33,9 +33,19 @@
 
 - (void)viewDidLoad
 {
-    
+    self.store = [FISDataStore sharedDataStore];
     [super viewDidLoad];
+    [self setUpSubviews];
+
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
     
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+}
+
+- (void)setUpSubviews {
     self.navigationController.navigationBar.layer.shadowRadius = 4;
     self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
     self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
@@ -44,16 +54,7 @@
     self.navigationController.navigationBar.layer.shadowPath = path.CGPath;
     self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.tableView reloadData];
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,27 +89,24 @@
     tweetSwiped.swipedPositive = NO;
     [self.trashItems removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.store removeTweet:tweetSwiped.content forVectorSet:self.vectorSet toPositive:YES];
 }
 
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
     NSInteger cellIndex = [self.tableView indexPathForCell:cell].row;
     FISTweet *tweetSwiped = self.trashItems[cellIndex];
     tweetSwiped.swipedPositive = NO;
-    
     [self.trashItems addObject:tweetSwiped];
     [self.trashItems removeObject:tweetSwiped];
     //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.store removeTweet:tweetSwiped.content forVectorSet:self.vectorSet toPositive:NO];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    // Configure the cell...
-    
     static NSString *CellIdentifier = @"trashBinCell";
-    
     FISSlidableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.isDismissed = NO;
     cell.leftRightScroller.contentOffset = CGPointMake(cell.frame.size.width,0);
@@ -130,9 +128,16 @@
     
     cell.backgroundColor = [UIColor clearColor];
     cell.backgroundView.backgroundColor = [UIColor clearColor];
-    
+    if (tweetToShow.swipedPositive){
+        cell.tweetContentView.backgroundColor = [UIColor colorWithRed:0 green:1.0 blue:0 alpha:0.5];
+    }else {
+        cell.tweetContentView.backgroundColor = [UIColor colorWithRed:1.0 green:0.8 blue:0.8 alpha:0.5];
+    }
     return cell;
 }
+     
+     
+     
 
 
 /*
@@ -173,16 +178,27 @@
  }
  */
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"generalToDetail"])
+     {
+         FISSlidableTableViewCell *cell = sender;
+         NSIndexPath *index = [self.tableView indexPathForCell:cell];
+         FISTweet *tweet = self.store.tweetsToShow[index.row];
+         FISWebViewController *nextVC = segue.destinationViewController;
+         nextVC.tweet = tweet;
+     }
  }
- */
+ 
+
+-(void)cellTapped:(FISSlidableTableViewCell *) cell
+{
+    [self performSegueWithIdentifier:@"generalToDetail" sender:cell];
+}
 
 
 - (IBAction)dismissButtonTapped:(id)sender

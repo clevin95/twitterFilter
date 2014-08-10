@@ -15,5 +15,7 @@
 
 + (void) addSentence:(NSString *)sentence toVectorSubset:(VectorSet *)vectorSet withPossitive:(BOOL)positive;
 
++ (void) removeSentance:(NSString *)sentence fromVectorSet:(VectorSet *)vectorSet withPossitive:(BOOL)positive;
+
 + (Vector *) convertSentanceToVector:(NSString *)sentence forContext:(NSManagedObjectContext *)context;
 @end

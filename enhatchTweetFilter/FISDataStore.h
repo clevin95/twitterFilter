@@ -34,6 +34,7 @@
 - (void) save;
 - (void) updateTweetsToShow:(void (^)(NSError *error))callback;
 - (void) addTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive;
+- (void) removeTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive;
 - (void) updateFriendsToShow:(void (^)(NSError *error))callback;
 - (void) createTwitterAccount:(void (^)(NSError *error))callback;
 - (void) getTweetsForFriend:(FISTwitterPerson *)friend withCompletion:(void (^)(NSError *error))callback;

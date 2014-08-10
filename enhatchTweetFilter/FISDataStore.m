@@ -198,9 +198,13 @@
 
 
 - (void) addTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive {
-   // NSMutableArray *dislikedVectors = [[NSMutableArray alloc]initWithArray:[self.gloabalVectors.negativeVectors allObjects]];
     [FISPreferenceAlgorithm addSentence:tweet toVectorSubset:vectorSet withPossitive:positive];
 }
+
+- (void) removeTweet:(NSString *)tweet forVectorSet:(VectorSet *)vectorSet toPositive:(BOOL)positive {
+    [FISPreferenceAlgorithm removeSentance:tweet fromVectorSet:vectorSet withPossitive:positive];
+}
+
 
 
 

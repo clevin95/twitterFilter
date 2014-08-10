@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "VectorSet.h"
 @interface FISTrashBinTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSMutableArray *trashItems;
+@property (strong, nonatomic) VectorSet *vectorSet;
 
 @end

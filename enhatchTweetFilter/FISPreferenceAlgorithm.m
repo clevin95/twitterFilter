@@ -48,10 +48,65 @@
                 
             }
         }
-    }else {
+    }
+    else {
         closestVector = [self addVector:sentenceVector toCompositeVector:closestVector];
     }
 }
+
++ (Vector *)findClosestToVector:(Vector *)vector inVectorsArray:(NSArray *)vectorsArray {
+    CGFloat closestScore = 1.57; //(pi/2)
+    Vector *closestVector = nil;
+    for (Vector *vector in vectorsArray){
+        CGFloat comparisonScore = [self compareVector:vector withVector:vector];
+        if (closestScore > comparisonScore)
+        {
+            closestScore = comparisonScore;
+            closestVector = vector;
+        }
+    }
+    return closestVector;
+}
+
++ (void)removeSentance:(NSString *)sentence fromVectorSet:(VectorSet *)vectorSet withPossitive:(BOOL)positive {
+    
+    FISDataStore *store = [FISDataStore sharedDataStore];
+    Vector *sentenceVector = [self convertSentanceToVector:sentence forContext:store.managedObjectContext];
+    NSArray *vectorsArray = nil;
+    if (positive){
+        vectorsArray = [vectorSet.positiveVectors allObjects];
+    }else {
+        vectorsArray = [vectorSet.negativeVectors allObjects];
+    }
+    Vector *closestVector = [FISPreferenceAlgorithm findClosestToVector:sentenceVector inVectorsArray:vectorsArray];
+    closestVector = [self subtractVector:sentenceVector fromCompositVector:closestVector];
+    
+    
+
+}
+
+
++ (Vector *)subtractVector:(Vector*)vectorOne fromCompositVector:(Vector*)compositeVector {
+    
+    
+    NSMutableArray *vectorOneWords =[[NSMutableArray alloc] initWithArray:[vectorOne.words allObjects]];
+    NSMutableArray *compositeVectorWords = [[NSMutableArray alloc] initWithArray:[compositeVector.words allObjects]];
+    for (Word *word in compositeVectorWords)
+    {
+        NSPredicate *wordPredicate = [NSPredicate predicateWithFormat:@"text == %@", word.text];
+        NSArray *foundWords = [vectorOneWords filteredArrayUsingPredicate:wordPredicate];
+        if ([foundWords count] > 0){
+            Word *wordFound = foundWords[0];
+            word.count = @([word.count integerValue] - [wordFound.count integerValue]);
+            [vectorOneWords removeObject:wordFound];
+        }
+    }
+    [compositeVectorWords addObjectsFromArray:vectorOneWords];
+    compositeVector.words = [NSSet setWithArray:compositeVectorWords];
+    return compositeVector;
+}
+
+
 
 + (CGFloat) compareSentence:(NSString *)sentance withVectorSet:(NSArray *)vectorSet {
     

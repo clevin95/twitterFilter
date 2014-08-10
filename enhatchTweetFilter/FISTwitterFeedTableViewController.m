@@ -12,16 +12,17 @@
 #import "FISSlidableTableViewCell.h"
 #import "FISTweet.h"
 #import "FISTwitterPerson.h"
-#import "FISPreferenceAlgorithm.h"
 #import "FISAlertView.h"
 #import "FISTrashBinTableViewController.h"
 #import "FISWebViewController.h"
+#import <RZCellSizeManager/RZCellSizeManager.h>
 
 @interface FISTwitterFeedTableViewController () <CellSliderDelegate>
 
 - (IBAction)refreshTapped:(id)sender;
 
 @property (strong, nonatomic) FISDataStore *store;
+@property (strong, nonatomic) RZCellSizeManager *sizeManager;
 
 
 @end
@@ -39,17 +40,10 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
     [self setUpNavigationBar];
-    self.navigationController.navigationBar.layer.shadowRadius = 4;
-    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
-    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
-    self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.navigationBar.bounds];
-    self.navigationController.navigationBar.layer.shadowPath = path.CGPath;
-    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    [self setUpViews];
     
     self.store = [FISDataStore sharedDataStore];
     
@@ -65,9 +59,30 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadTweets) name:@"finishedCreatingUser" object:nil];
 }
 
+- (void)setUpSizeManager {
+    self.sizeManager = [[RZCellSizeManager alloc] init];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self reloadTapped];
+}
+
+- (void)setUpViews {
+    self.navigationController.navigationBar.layer.shadowRadius = 4;
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 3);
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.5;
+    self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.navigationController.navigationBar.bounds];
+    self.navigationController.navigationBar.layer.shadowPath = path.CGPath;
+    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"EnhatchFullImage"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+}
+
 - (void)setUpNavigationBar {
     UIToolbar *rightToolbarView = [[UIToolbar alloc]  initWithFrame:CGRectMake(0, 0, 70, 40)];
-    
+    rightToolbarView.clipsToBounds = YES;
     [rightToolbarView setBackgroundImage:[UIImage new]
                       forToolbarPosition:UIToolbarPositionAny
                               barMetrics:UIBarMetricsDefault];
@@ -75,8 +90,10 @@
     [rightToolbarView setBackgroundColor:[UIColor clearColor]];
     UIBarButtonItem *trashButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashTapped)];
     UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadTapped)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+    spacer.width = 15;
     rightToolbarView.layer.backgroundColor = [UIColor whiteColor].CGColor ;
-    rightToolbarView.items = @[trashButton, reloadButton];
+    rightToolbarView.items = @[trashButton, spacer, reloadButton];
     UIBarButtonItem* barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:rightToolbarView];
     // Set the navigation bar's right button item
     self.navigationItem.rightBarButtonItem = barBtnItem;
@@ -88,7 +105,6 @@
 
 - (void)reloadTapped {
     [self.tableView beginUpdates];
-    
     NSArray * unstoredTweetsToShow = [self.store.tweetsToShow copy];
     self.store.tweetsToShow = [self.store scoreAndSortArray:self.store.tweetsToShow forVectorSet:self.store.gloabalVectors];
     NSInteger sourceRow = 0;
@@ -151,6 +167,10 @@
     cell.leftRightScroller.contentOffset = CGPointMake(cell.frame.size.width,0);
     FISTweet *tweetToShow = self.store.tweetsToShow[indexPath.row];
     FISTwitterPerson *tweeter = tweetToShow.tweeter;
+    
+    
+    
+    
     if (tweeter.profileImage){
         cell.profileImageView.image = tweeter.profileImage;
     }else{
@@ -159,9 +179,13 @@
             cell.profileImageView.image = tweeter.profileImage;
         }];
     }
+    
+    
+    
+    
+    
     cell.contentField.text = tweetToShow.content;
     cell.nameLabel.text = tweeter.name;
-    cell.scoreLabel.text = [NSString stringWithFormat:@"%f",tweetToShow.score];
     cell.screenNameLabel.text = [@"@" stringByAppendingString:tweeter.screenName];
     cell.delegate = self;
     
@@ -197,8 +221,8 @@
     
     NSInteger cellIndex = [self.tableView indexPathForCell:cell].row;
     FISTweet *tweetSwiped = self.store.tweetsToShow[cellIndex];
+    [self.store.globalTrash insertObject:tweetSwiped atIndex:0];
     tweetSwiped.swipedPositive = NO;
-    [self.store.globalTrash addObject:tweetSwiped];
     [self.store.tweetsToShow removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
 }
@@ -207,9 +231,8 @@
     [self.store addTweet:cell.contentField.text forVectorSet:self.store.gloabalVectors toPositive:YES];
     NSInteger cellIndex = [self.tableView indexPathForCell:cell].row;
     FISTweet *tweetSwiped = self.store.tweetsToShow[cellIndex];
-    tweetSwiped.swipedPositive = NO;
-    
-    [self.store.globalTrash addObject:tweetSwiped];
+    tweetSwiped.swipedPositive = YES;
+    [self.store.globalTrash insertObject:tweetSwiped atIndex:0];
     [self.store.tweetsToShow removeObject:tweetSwiped];
     //[self.store.scoreArray removeObjectAtIndex:([self.tableView indexPathForCell:cell]).row];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
@@ -252,6 +275,7 @@
     
     if ( [((UIViewController *)segue.destinationViewController).restorationIdentifier isEqualToString:@"trashNavController"]){
         FISTrashBinTableViewController *trashController = ((UIViewController *)segue.destinationViewController).childViewControllers[0] ;
+        trashController.vectorSet = self.store.gloabalVectors;
         trashController.trashItems = self.store.globalTrash;
     }
     else if ([segue.identifier isEqualToString:@"generalToDetail"])

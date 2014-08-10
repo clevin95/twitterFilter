@@ -55,7 +55,7 @@
 
 - (void)setUpNavigationBar {
     UIToolbar *rightToolbarView = [[UIToolbar alloc]  initWithFrame:CGRectMake(0, 0, 70, 40)];
-    
+    rightToolbarView.clipsToBounds = YES;
     [rightToolbarView setBackgroundImage:[UIImage new]
                   forToolbarPosition:UIToolbarPositionAny
                           barMetrics:UIBarMetricsDefault];
@@ -64,8 +64,10 @@
 
     UIBarButtonItem *trashButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashTapped)];
     UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadTapped)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+    spacer.width = 15;
     rightToolbarView.layer.backgroundColor = [UIColor clearColor].CGColor;
-    rightToolbarView.items = @[trashButton, reloadButton];
+    rightToolbarView.items = @[trashButton, spacer, reloadButton];
     
     UIBarButtonItem* barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:rightToolbarView];
     
@@ -149,7 +151,6 @@
     cell.isDismissed = NO;
     cell.leftRightScroller.contentOffset = CGPointMake(cell.frame.size.width,0);
     cell.delegate = self;
-    cell.scoreLabel.text = [NSString stringWithFormat:@"%f",tweetToShow.score];
     if (self.currentFriend.profileImage){
         cell.profileImageView.image = self.currentFriend.profileImage;
     }else{
@@ -169,7 +170,7 @@
 -(void)cellSlidRight:(FISSlidableTableViewCell *)cell {
     FISTweet *tweetSwiped = self.currentFriend.tweets[[self.tableView indexPathForCell:cell].row];
     tweetSwiped.swipedPositive = NO;
-    [self.currentFriend.personalTrash addObject:tweetSwiped];
+    [self.currentFriend.personalTrash insertObject:tweetSwiped atIndex:0];
     [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:NO];
     [self.currentFriend.tweets removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
@@ -178,7 +179,7 @@
 -(void)cellSlidLeft:(FISSlidableTableViewCell *)cell {
     FISTweet *tweetSwiped = self.currentFriend.tweets[[self.tableView indexPathForCell:cell].row];
     tweetSwiped.swipedPositive = YES;
-    [self.currentFriend.personalTrash addObject:tweetSwiped];
+    [self.currentFriend.personalTrash insertObject:tweetSwiped atIndex:0];
     [self.store addTweet:cell.contentField.text forVectorSet:self.currentFriend.personalVectors toPositive:YES];
     [self.currentFriend.tweets removeObject:tweetSwiped];
     [self.tableView deleteRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationFade];
@@ -216,8 +217,6 @@
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    
     if ( [((UIViewController *)segue.destinationViewController).restorationIdentifier isEqualToString:@"trashNavController"]){
         FISTrashBinTableViewController *trashController = ((UIViewController *)segue.destinationViewController).childViewControllers[0] ;
         trashController.trashItems = self.currentFriend.personalTrash;

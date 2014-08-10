@@ -37,7 +37,6 @@
 		6FA5EADE1987E6EB00AECF7C /* FISDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EADD1987E6EB00AECF7C /* FISDataStore.m */; };
 		6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */; };
 		6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE31988205000AECF7C /* FISConstants.m */; };
-		6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */; };
 		6FD062AA198A7914007FD3AA /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062A8198A7914007FD3AA /* Model.xcdatamodeld */; };
 		6FD062B6198A7CA9007FD3AA /* Word.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B5198A7CA9007FD3AA /* Word.m */; };
 		6FD062B9198A84BE007FD3AA /* FISPreferenceAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD062B8198A84BE007FD3AA /* FISPreferenceAlgorithm.m */; };
@@ -106,8 +105,6 @@
 		6FA5EAE01987E8E100AECF7C /* FISCompareSentences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISCompareSentences.m; sourceTree = "<group>"; };
 		6FA5EAE21988205000AECF7C /* FISConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISConstants.h; sourceTree = "<group>"; };
 		6FA5EAE31988205000AECF7C /* FISConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISConstants.m; sourceTree = "<group>"; };
-		6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FISPreferenceVectorField.h; sourceTree = "<group>"; };
-		6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FISPreferenceVectorField.m; sourceTree = "<group>"; };
 		6FD062A9198A7914007FD3AA /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		6FD062B4198A7CA9007FD3AA /* Word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Word.h; sourceTree = "<group>"; };
 		6FD062B5198A7CA9007FD3AA /* Word.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Word.m; sourceTree = "<group>"; };
@@ -261,8 +258,6 @@
 				6F0412F01989673E002CC2E7 /* FISTweet.m */,
 				6F70B14B19893E3500AE67FF /* FISTwitterPerson.h */,
 				6F70B14C19893E3500AE67FF /* FISTwitterPerson.m */,
-				6FA5EAE7198847E500AECF7C /* FISPreferenceVectorField.h */,
-				6FA5EAE8198847E500AECF7C /* FISPreferenceVectorField.m */,
 				6FA5EADC1987E6EB00AECF7C /* FISDataStore.h */,
 				6FA5EADD1987E6EB00AECF7C /* FISDataStore.m */,
 				6FA5EAD91987E2F700AECF7C /* FISTwitterAPIClient.h */,
@@ -437,7 +432,6 @@
 				6FA5EAE41988205000AECF7C /* FISConstants.m in Sources */,
 				6FA5EAB81987DC4300AECF7C /* FISViewController.m in Sources */,
 				6FA5EAAB1987DC4300AECF7C /* main.m in Sources */,
-				6FA5EAE9198847E500AECF7C /* FISPreferenceVectorField.m in Sources */,
 				6F80C344198C16DD0051CDD3 /* FISTrashBinTableViewController.m in Sources */,
 				6F70B1471989376200AE67FF /* FISSegmentedViewController.m in Sources */,
 				6FA5EAE11987E8E100AECF7C /* FISCompareSentences.m in Sources */,
