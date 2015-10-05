@@ -10,7 +10,7 @@
 
 @implementation FISConstants
 
-NSString *const CLIENT_SECRET=@"arVyycwMQ9v5vsCNU8fJST5qR2r1B7yfGCVjWXWjj8vkoX4JWb";
-NSString *const CLIENT_KEY=@"EeaSWvnrfBW18u06DPi4Fmhgq" ;
+NSString *const CLIENT_SECRET=@"jifgP2rDbbzg5cZBxONBXhPNINFh8QIC759wG8br4L1VG2LU7S";
+NSString *const CLIENT_KEY=@"24knVLucUHzTrq4qToAG3CZjc" ;
 
 @end
